@@ -10,7 +10,7 @@
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <Label Text="Add a New Job" HorizontalTextAlignment="Center"/>
             <Label Text="Job Name" HorizontalTextAlignment="Center"/>
-            <Entry x:Name="JobNameEntry" HorizontalOptions="Center" WidthRequest="200"/>
+            <Entry Text="{Binding JobName}" HorizontalOptions="Center" WidthRequest="200"/>
             <Button Text="Create Job" Command="{Binding AddJobCommand}"/>
         </StackLayout>
     </ContentPage.Content>
