@@ -5,12 +5,6 @@
        Title="CashTracker"
        x:Class="CashTracker.AppShell">
 
-    <!--
-        The overall app visual hierarchy is defined here, along with navigation.
-    
-        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
-    -->
-
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
@@ -65,6 +59,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter TargetName="FlyoutItemLayout" Property="BackgroundColor" Value="Red"/>
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -79,12 +74,11 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-    <FlyoutItem Title="About" Icon="icon_about.png">
-        <Tab Title="About1" Icon="icon_about.png">
-            <ShellContent Title="InAbout" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-            <ShellContent Title="InItems" Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+    <FlyoutItem Title="Jobs" Route="Jobs" Icon="icon_about.png">
+        <Tab Title="Job" Icon="icon_about.png">
+            <ShellContent Title="AddStat" Route="AddStatPage" ContentTemplate="{DataTemplate local:AddStatPage}" />
         </Tab>
-        <Tab Title="About2" Icon="icon_about.png">
+        <Tab Title="About" Icon="icon_about.png">
             <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
         </Tab>
     </FlyoutItem>

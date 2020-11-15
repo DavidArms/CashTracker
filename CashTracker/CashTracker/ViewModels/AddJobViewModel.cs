@@ -1,4 +1,4 @@
-﻿using CashTracker.Views;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -23,58 +23,31 @@ namespace CashTracker.ViewModels
         {
             Title = "Add Job";
             AddJobCommand = new Command(
-                execute: SaveNewJob,
+                execute: async () => await SaveNewJob(),
                 canExecute: () => !string.IsNullOrEmpty(JobName)
             );
-
-
-
         }
 
-        private void SaveNewJob()
+        private async Task SaveNewJob()
         {
             //TODO: Verify that none of the jobs in the database have the same name as this job
-
-            var newSideBarItem = new FlyoutItem
+            var item = new MenuItem()
             {
-                Title = JobName
+                Text = JobName,
+                Command = new Command(async () => await GoToNewJob())
             };
-
-            // TODO: look into making tab templates here instead
-            var addStatTab = new Tab()
-            {
-                Title = "Add Stat"
-            };
-            // TODO: Create a new View Stats page
-            var aboutTab = new Tab()
-            {
-                Title = "About"
-            };
-
-            var addStatPage = new ShellContent()
-            {
-                Route = "AddStatPage",
-                Content = new AddStatPage()
-            };
-            var aboutPage = new ShellContent()
-            {
-                Route = "AboutPage",
-                Content = new AboutPage()
-            };
-
-            addStatTab.Items.Add(addStatPage);
-            aboutTab.Items.Add(aboutPage);
-
-            newSideBarItem.Items.Add(addStatTab);
-            newSideBarItem.Items.Add(aboutTab);
 
             // Add the new pages to the shell
-            Shell.Current.Items.Add(newSideBarItem);
+            Shell.Current.Items.Add(item);
 
             // Navigate to the add stat page for the new job
-            // TODO: Determine if this is the best approach. Doing this just replaces the active page with the addStatPage. There's no animation.
-            // If we were to use "goToAsync" instead then we'd end up with the nav bar and back button at the top.
-            Shell.Current.CurrentItem = addStatPage;
+            await GoToNewJob();
+        }
+
+        private async Task GoToNewJob()
+        {
+            await Shell.Current.GoToAsync($"//AddStatPage?jobName={JobName}");
+            Shell.Current.FlyoutIsPresented = false;
         }
     }
 }

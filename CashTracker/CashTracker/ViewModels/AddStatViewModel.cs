@@ -1,8 +1,11 @@
 ﻿using StacksStats.Models;
 using System;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace CashTracker.ViewModels
 {
+    [QueryProperty("JobName", "jobName")]
     public class AddStatViewModel : BaseViewModel
     {
         private double? _totalHours;
@@ -19,6 +22,16 @@ namespace CashTracker.ViewModels
             {
                 _activeJob = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private string _jobName;
+        public string JobName
+        {
+            get => _jobName;
+            set
+            {
+                SetProperty(ref _jobName, value);
             }
         }
 
@@ -113,8 +126,10 @@ namespace CashTracker.ViewModels
             TotalHours = null;
             TotalMoney = null;
             DateWorked = DateTime.Today;
+            SaveStat = new Command(SaveNewStat);
         }
 
+        public ICommand SaveStat { get; }
         /// <summary>
         /// Saves a new statistic based on the inputs currently on screen
         /// </summary>
