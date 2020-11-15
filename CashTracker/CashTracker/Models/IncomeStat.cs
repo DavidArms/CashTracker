@@ -2,7 +2,7 @@
 //using SQLiteNetExtensions.Attributes;
 using System;
 
-namespace StacksStats.Models
+namespace CashTracker.Models
 {
     /// <summary>
     /// A statistic related to the money made and hours worked on a job

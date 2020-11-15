@@ -1,4 +1,4 @@
-﻿using StacksStats.Models;
+﻿using CashTracker.Models;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;

@@ -1,7 +1,7 @@
 ﻿//using SQLite;
 using System;
 
-namespace StacksStats.Models
+namespace CashTracker.Models
 {
     /// <summary>
     /// The job creating trackable income for the user
