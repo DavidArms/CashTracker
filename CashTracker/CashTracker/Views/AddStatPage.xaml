@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vms="clr-namespace:CashTracker.ViewModels"
+             x:Class="CashTracker.Views.AddStatPage"
+             Title="Add Stat">
+    <ContentPage.BindingContext>
+        <vms:AddStatViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <StackLayout HorizontalOptions="Center">
+
+                <Label Text="{Binding JobName}"
+                       HorizontalTextAlignment="Center" 
+                       FontAttributes="Bold"
+                       FontSize="30"
+                       TextColor="Black"/>
+                <Entry x:Name="MoneyMadeEntry" 
+                   Placeholder="$0.00" 
+                   Text="{Binding TotalMoneyString}" 
+                   Keyboard="Numeric"
+                   HorizontalTextAlignment="Center"/>
+                <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Entry x:Name="HoursWorkedEntry"
+                   Placeholder="0 hours" 
+                   Text="{Binding TotalHoursString}"
+                   Keyboard="Numeric"
+                   HorizontalTextAlignment="Center"/>
+                <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <DatePicker x:Name="DateWorked"
+                        Date="{Binding DateWorked}"/>
+                <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Button x:Name="SubmitButton" Text="Save" Command="{Binding SaveStat}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
