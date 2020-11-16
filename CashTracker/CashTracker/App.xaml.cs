@@ -1,4 +1,4 @@
-﻿using CashTracker.Services;
+﻿using CashTracker.Database;
 using Xamarin.Forms;
 
 namespace CashTracker
@@ -10,7 +10,7 @@ namespace CashTracker
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<JobRepository>();
             MainPage = new AppShell();
         }
 
