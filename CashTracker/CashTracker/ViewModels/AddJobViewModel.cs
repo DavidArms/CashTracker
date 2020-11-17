@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using CashTracker.Database;
+using CashTracker.Models;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -6,6 +8,8 @@ namespace CashTracker.ViewModels
 {
     public class AddJobViewModel : BaseViewModel
     {
+        private JobRepository _repo = DependencyService.Get<JobRepository>();
+
         public ICommand AddJobCommand { get; }
 
         private string _jobName;
@@ -30,7 +34,17 @@ namespace CashTracker.ViewModels
 
         private async Task SaveNewJob()
         {
-            //TODO: Verify that none of the jobs in the database have the same name as this job
+            var existingJob = await _repo.FirstOrDefaultAsync(job => job.Name == JobName);
+            if (existingJob != null)
+                return;
+
+            var newJob = new Job
+            {
+                Name = JobName,
+                Employer = "Fake"
+            };
+            await _repo.AddAsync(newJob);
+
             var item = new MenuItem()
             {
                 Text = JobName,
