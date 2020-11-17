@@ -1,55 +1,64 @@
-﻿using System;
+﻿using CashTracker.Models;
+using SQLite;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace CashTracker.Database
 {
-    public class BaseSQLiteRepository 
-        //: IAsyncRepository<T> where T : BaseEntity
+    /// <summary>
+    /// Generic base sqlite repository
+    /// </summary>
+    /// <typeparam name="T">Generic type parameter to be set by subclasses</typeparam>
+    /// TODO: should this be an abstract class?
+    public class BaseSQLiteRepository<T> : IAsyncRepository<T> where T : BaseEntity, new() // this new() makes everything work.... but why?
     {
-        //public Task Add(T entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <summary>
+        /// The connection to the database
+        /// </summary>
+        private SQLiteAsyncConnection Connection => DependencyService.Get<ISQLiteDb>().GetAsyncConnection();
+        //private AsyncTableQuery<T> TableAsync => Connection.Table<T>(); //TODO: See if this can replace all of the Connection.Table<T>()'s
 
-        //public Task<int> CountAll()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <summary>
+        /// Constructor for the repository
+        /// </summary>
+        /// <remarks>Creates the table we need if they don't already exist in the DB</remarks>
+        public BaseSQLiteRepository()
+        {
+            Connection.CreateTableAsync<T>();
+        }
 
-        //public Task<int> CountWhere(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task<T> GetByIdAsync(int id) => await Connection.Table<T>().FirstOrDefaultAsync(entity => entity.ID == id);
 
-        //public Task<T> FirstOrDefault(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+            => Connection.Table<T>().FirstOrDefaultAsync(predicate);
 
-        //public Task<IEnumerable<T>> GetAll()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task AddAsync(T entity) => await Connection.InsertAsync(entity);
 
-        //public Task<T> GetById(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task UpdateAsync(T entity) => await Connection.UpdateAsync(entity);
 
-        //public Task<IEnumerable<T>> GetWhere(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task RemoveAsync(T entity) => await Connection.DeleteAsync(entity);
 
-        //public Task Remove(T entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task<IEnumerable<T>> GetAllAsync() => await Connection.Table<T>().ToListAsync();
 
-        //public Task Update(T entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        public async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate) =>
+            await Connection.Table<T>().Where(predicate).ToListAsync();
+
+        // TODO not sure how to implement the below right now
+        //public async Task<int> CountAll() => await GetAll().
+
+        //public Task<int> CountWhere(Expression<Func<T, bool>> predicate)
+        //    => Context.Set<T>().CountAsync(predicate);
+
+
     }
 }
