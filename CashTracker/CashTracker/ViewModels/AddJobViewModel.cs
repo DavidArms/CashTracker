@@ -8,7 +8,7 @@ namespace CashTracker.ViewModels
 {
     public class AddJobViewModel : BaseViewModel
     {
-        private JobRepository _repo = DependencyService.Get<JobRepository>();
+        private IAsyncRepository<Job> _repo = DependencyService.Get<IAsyncRepository<Job>>();
 
         public ICommand AddJobCommand { get; }
 

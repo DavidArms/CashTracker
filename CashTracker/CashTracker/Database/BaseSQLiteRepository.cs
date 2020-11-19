@@ -19,12 +19,11 @@ namespace CashTracker.Database
         /// The connection to the database
         /// </summary>
         private SQLiteAsyncConnection Connection => DependencyService.Get<ISQLiteDb>().GetAsyncConnection();
-        //private AsyncTableQuery<T> TableAsync => Connection.Table<T>(); //TODO: See if this can replace all of the Connection.Table<T>()'s
 
         /// <summary>
         /// Constructor for the repository
         /// </summary>
-        /// <remarks>Creates the table we need if they don't already exist in the DB</remarks>
+        /// <remarks>Creates the table we need if it doesn't already exist in the DB</remarks>
         public BaseSQLiteRepository()
         {
             Connection.CreateTableAsync<T>();
