@@ -119,8 +119,6 @@ namespace CashTracker.ViewModels
         /// <summary>
         /// Page for adding statistics for a job
         /// </summary>
-        /// <param name="job"></param>
-        /// <param name="repo"></param>
         public AddStatViewModel()
         {
             TotalHours = null;

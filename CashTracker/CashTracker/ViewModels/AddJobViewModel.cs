@@ -10,9 +10,21 @@ namespace CashTracker.ViewModels
     {
         private IAsyncRepository<Job> _repo = App.Container.Resolve<IAsyncRepository<Job>>();
 
+        /// <summary>
+        /// Command to add the new job to the database
+        /// </summary>
         public ICommand AddJobCommand { get; }
 
+        /// <summary>
+        /// Cancels the Add Job operation and goes back to the main screen
+        /// </summary>
+        /// TODO: maybe just go back to the last screen? Not necessarily the main screen.
+        public ICommand CancelCommand { get; }
+
         private string _jobName;
+        /// <summary>
+        /// Provided name of the new job
+        /// </summary>
         public string JobName
         {
             get => _jobName;
@@ -23,13 +35,28 @@ namespace CashTracker.ViewModels
             }
         }
 
+        private string _employerName;
+        /// <summary>
+        /// Provided name of the new job
+        /// </summary>
+        public string EmployerName
+        {
+            get => _employerName;
+            set
+            {
+                SetProperty(ref _employerName, value);
+                (AddJobCommand as Command).ChangeCanExecute();
+            }
+        }
+
         public AddJobViewModel()
         {
             Title = "Add Job";
             AddJobCommand = new Command(
                 execute: async () => await SaveNewJob(),
-                canExecute: () => !string.IsNullOrEmpty(JobName)
+                canExecute: () => !string.IsNullOrEmpty(JobName) && !string.IsNullOrEmpty(EmployerName)
             );
+            CancelCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
         }
 
         private async Task SaveNewJob()
