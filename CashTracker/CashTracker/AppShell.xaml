@@ -21,10 +21,6 @@
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
-            <!--
-            Default Styles for all Flyout Items
-            https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
-            -->
             <Style Class="FlyoutItemLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="White"></Setter>
             </Style>
@@ -49,9 +45,6 @@
                 </Setter>
             </Style>
 
-            <!--
-            Custom Style you can apply to any Flyout Item
-            -->
             <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
@@ -59,7 +52,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
-                                    <Setter TargetName="FlyoutItemLayout" Property="BackgroundColor" Value="Red"/>
+                                    <Setter TargetName="FlyoutItemLayout" Property="BackgroundColor" Value="White"/>
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -69,13 +62,8 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- 
-        When the Flyout is visible this defines the content to display in the flyout.
-        FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
-        https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
-    -->
-    <FlyoutItem Title="Jobs" Route="Jobs" Icon="icon_about.png">
-        <Tab Title="Job" Icon="icon_about.png">
+    <FlyoutItem Title="Jobs" Icon="icon_about.png">
+        <Tab Title="Add Stat" Icon="icon_about.png">
             <ShellContent Title="AddStat" Route="AddStatPage" ContentTemplate="{DataTemplate local:AddStatPage}" />
         </Tab>
         <Tab Title="About" Icon="icon_about.png">
@@ -83,20 +71,7 @@
         </Tab>
     </FlyoutItem>
 
-    <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
-    <MenuItem Text="Add Job" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
-    </MenuItem>
-
-    <!--
-        TabBar lets you define content that won't show up in a flyout menu. When this content is active
-        the flyout menu won't be available. This is useful for creating areas of the application where 
-        you don't want users to be able to navigate away from. If you would like to navigate to this 
-        content you can do so by calling 
-        await Shell.Current.GoToAsync("//LoginPage");
-    -->
-    <TabBar>
-        <ShellContent Route="AddJobPage" ContentTemplate="{DataTemplate local:AddJobPage}" />
-    </TabBar>
+    <MenuItem Text="Add Job" StyleClass="MenuItemLayoutStyle" Command="{Binding AddJobCommand}"/>
 
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.

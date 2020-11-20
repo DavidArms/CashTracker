@@ -1,20 +1,24 @@
 ﻿using CashTracker.Views;
 using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace CashTracker
 {
     public partial class AppShell : Shell
     {
+        public ICommand AddJobCommand => new Command(async () =>
+        {
+            await Shell.Current.GoToAsync("AddJobPage");
+            Shell.Current.FlyoutIsPresented = false;
+        });
+
         public AppShell()
         {
             InitializeComponent();
-            //TODO: Register routes not defined in the shell visual hiearchy here
-        }
+            BindingContext = this;
 
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//AddJobPage");
+            Routing.RegisterRoute(nameof(AddJobPage), typeof(AddJobPage));
         }
     }
 }
