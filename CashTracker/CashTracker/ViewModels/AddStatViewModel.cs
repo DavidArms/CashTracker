@@ -143,8 +143,7 @@ namespace CashTracker.ViewModels
                 Job_ID = ActiveJob.ID,
                 MoneyMade = TotalMoney.Value,
                 HoursWorked = TotalHours.Value,
-                Date = DateWorked,
-                DayOfWeek = (int)DateWorked.DayOfWeek
+                DateStart = DateWorked
             };
 
             //try

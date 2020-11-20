@@ -1,5 +1,5 @@
 ﻿using CashTracker.Models;
-using CashTracker.Services;
+using CashTracker.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,8 @@ namespace CashTracker.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Job> DataStore => DependencyService.Get<IDataStore<Job>>();
+        // TODO: This came from the template project. Is it useful?
+        //public IAsyncRepository<Job> DataStore => DependencyService.Get<IAsyncRepository<Job>>();
 
         bool isBusy = false;
         public bool IsBusy
