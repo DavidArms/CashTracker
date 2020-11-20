@@ -23,5 +23,9 @@ namespace CashTracker.Models
         [NotNull]
         public DateTime ModifiedDate { get; set; }
 
+        public BaseEntity()
+        {
+
+        }
     }
 }

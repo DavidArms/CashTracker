@@ -7,6 +7,7 @@ namespace CashTracker.Database
     /// </summary>
     public interface ISQLiteDb
     {
+        SQLiteAsyncConnection GetAsyncConnection();
         SQLiteConnection GetConnection();
     }
 }

@@ -1,16 +1,17 @@
-﻿using CashTracker.Database;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace CashTracker
 {
     public partial class App : Application
     {
+        /// <summary>
+        /// The app's Ioc container 
+        /// </summary>
+        public static AppContainer Container { get; } = new AppContainer();
 
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<JobRepository>();
             MainPage = new AppShell();
         }
 
