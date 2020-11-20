@@ -13,21 +13,21 @@ namespace CashTracker.Database
     public interface IAsyncRepository<T> where T : BaseEntity
     {
         /// <summary>
-        /// Get a record of type <see cref="T"/> which has the provided id
+        /// Get a <typeparamref name="T"/> record which has the provided id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         Task<T> GetByIdAsync(int id);
 
         /// <summary>
-        /// Returns the first or default result matching the provided predicate
+        /// Returns the first or default result matching the provided predicate of type <typeparamref name="T"/>
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
-        /// Adds the passed in entity of type <see cref="T"/> to the database
+        /// Adds the passed in entity of type <typeparamref name="T"/> to the database
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
@@ -48,19 +48,29 @@ namespace CashTracker.Database
         Task RemoveAsync(T entity);
 
         /// <summary>
-        /// Gets all records in the <see cref="T"/> table
+        /// Gets all records in the <typeparamref name="T"/> table
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<T>> GetAllAsync();
 
         /// <summary>
-        /// Gets all records in the <see cref="T"/> table which match the passed in predicate
+        /// Gets all records in the <typeparamref name="T"/> table which match the passed in predicate
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate);
 
-        //Task<int> CountAll();
-        //Task<int> CountWhere(Expression<Func<T, bool>> predicate);
+        /// <summary>
+        /// Gets the count of all records of type <see cref="T"/>
+        /// </summary>
+        /// <returns></returns>
+        Task<int> CountAll();
+
+        /// <summary>
+        /// Gets the count of all <typeparamref name="T"/> which are returned by the <paramref name="predicate"/>
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        Task<int> CountWhere(Expression<Func<T, bool>> predicate);
     }
 }

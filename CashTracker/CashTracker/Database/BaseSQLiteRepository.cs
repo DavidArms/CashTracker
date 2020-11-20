@@ -12,8 +12,7 @@ namespace CashTracker.Database
     /// Generic base sqlite repository
     /// </summary>
     /// <typeparam name="T">Generic type parameter to be set by subclasses</typeparam>
-    /// TODO: should this be an abstract class?
-    public class BaseSQLiteRepository<T> : IAsyncRepository<T> where T : BaseEntity, new() // this new() makes everything work.... but why?
+    public abstract class BaseSQLiteRepository<T> : IAsyncRepository<T> where T : BaseEntity, new() // TODO: this new() makes everything work.... but why?
     {
         /// <summary>
         /// The connection to the database
@@ -52,11 +51,11 @@ namespace CashTracker.Database
         public async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate) =>
             await Connection.Table<T>().Where(predicate).ToListAsync();
 
-        // TODO not sure how to implement the below right now
-        //public async Task<int> CountAll() => await GetAll().
+        /// <inheritdoc/>
+        public async Task<int> CountAll() => await Connection.Table<T>().CountAsync();
 
-        //public Task<int> CountWhere(Expression<Func<T, bool>> predicate)
-        //    => Context.Set<T>().CountAsync(predicate);
+        /// <inheritdoc/>
+        public Task<int> CountWhere(Expression<Func<T, bool>> predicate) => Connection.Table<T>().CountAsync(predicate);
 
 
     }
