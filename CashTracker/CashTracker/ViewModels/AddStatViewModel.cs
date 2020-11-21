@@ -1,11 +1,13 @@
+﻿using CashTracker.Database;
 using CashTracker.Models;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace CashTracker.ViewModels
 {
-    [QueryProperty("JobName", "jobName")]
+    [QueryProperty("JobID", "JobID")]
     public class AddStatViewModel : BaseViewModel
     {
         private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
@@ -28,13 +30,16 @@ namespace CashTracker.ViewModels
             }
         }
 
-        private string _jobName;
-        public string JobName
+        public string JobID
         {
-            get => _jobName;
             set
             {
-                SetProperty(ref _jobName, value);
+                if (!int.TryParse(value, out var asInt))
+                    return;
+
+                var jobToLoad = Task.Run(() => _jobRepo.FirstOrDefaultAsync(job => job.ID == asInt)).Result;
+                if (jobToLoad != null)
+                    ActiveJob = jobToLoad;
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using CashTracker.Views;
-using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 

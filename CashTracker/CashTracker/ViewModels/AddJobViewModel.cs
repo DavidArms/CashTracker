@@ -16,9 +16,8 @@ namespace CashTracker.ViewModels
         public ICommand AddJobCommand { get; }
 
         /// <summary>
-        /// Cancels the Add Job operation and goes back to the main screen
+        /// Cancels the Add Job operation and goes back
         /// </summary>
-        /// TODO: maybe just go back to the last screen? Not necessarily the main screen.
         public ICommand CancelCommand { get; }
 
         private string _jobName;
@@ -61,34 +60,19 @@ namespace CashTracker.ViewModels
 
         private async Task SaveNewJob()
         {
-            var existingJob = await _repo.FirstOrDefaultAsync(job => job.Name == JobName);
+            var existingJob = await _repo.FirstOrDefaultAsync(job => job.Name == JobName && job.Employer == EmployerName);
             if (existingJob != null)
                 return;
 
             var newJob = new Job
             {
                 Name = JobName,
-                Employer = "Fake"
+                Employer = EmployerName
             };
             await _repo.AddAsync(newJob);
 
-            var item = new MenuItem()
-            {
-                Text = JobName,
-                Command = new Command(async () => await GoToNewJob())
-            };
-
-            // Add the new pages to the shell
-            Shell.Current.Items.Add(item);
-
             // Navigate to the add stat page for the new job
-            await GoToNewJob();
-        }
-
-        private async Task GoToNewJob()
-        {
-            await Shell.Current.GoToAsync($"//AddStatPage?jobName={JobName}");
-            Shell.Current.FlyoutIsPresented = false;
+            await Shell.Current.GoToAsync($"//AddStatPage?JobID={newJob.ID}");
         }
     }
 }

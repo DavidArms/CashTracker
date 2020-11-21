@@ -12,11 +12,17 @@
         <StackLayout Padding="10">
             <StackLayout HorizontalOptions="Center">
 
-                <Label Text="{Binding JobName}"
+                <Label Text="{Binding ActiveJob.Name}"
                        HorizontalTextAlignment="Center" 
                        FontAttributes="Bold"
                        FontSize="30"
                        TextColor="Black"/>
+                <Label Text="{Binding ActiveJob.Employer}" 
+                    HorizontalTextAlignment="Center" 
+                       FontAttributes="Bold"
+                       FontSize="10"
+                       TextColor="Black"
+                       Margin="0,0,0,20"/>
                 <Entry x:Name="MoneyMadeEntry" 
                    Placeholder="$0.00" 
                    Text="{Binding TotalMoneyString}" 
