@@ -17,6 +17,7 @@ namespace CashTracker
             // services
             var builder = new ContainerBuilder();
             builder.RegisterType<JobRepository>().As<IAsyncRepository<Job>>();
+            builder.RegisterType<IncomeStatRepository>().As<IAsyncRepository<IncomeStat>>();
 
             // view models // TODO: Look into whether or not it's worth refactoring to set up view models here
             //builder.RegisterType<MainViewModel>().SingleInstance();

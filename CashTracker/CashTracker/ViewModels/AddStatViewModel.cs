@@ -1,4 +1,4 @@
-﻿using CashTracker.Models;
+using CashTracker.Models;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,6 +8,9 @@ namespace CashTracker.ViewModels
     [QueryProperty("JobName", "jobName")]
     public class AddStatViewModel : BaseViewModel
     {
+        private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
+        private IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
+
         private double? _totalHours;
         private double? _totalMoney;
 
