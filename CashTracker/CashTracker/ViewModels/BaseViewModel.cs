@@ -10,9 +10,6 @@ namespace CashTracker.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        // TODO: This came from the template project. Is it useful?
-        //public IAsyncRepository<Job> DataStore => DependencyService.Get<IAsyncRepository<Job>>();
-
         bool isBusy = false;
         public bool IsBusy
         {

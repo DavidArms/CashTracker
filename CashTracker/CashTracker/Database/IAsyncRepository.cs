@@ -27,6 +27,12 @@ namespace CashTracker.Database
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
+        /// Gets the first <typeparamref name="T"/> if one exists
+        /// </summary>
+        /// <returns></returns>
+        Task<T> FirstOrDefaultAsync();
+
+        /// <summary>
         /// Adds the passed in entity of type <typeparamref name="T"/> to the database
         /// </summary>
         /// <param name="entity"></param>

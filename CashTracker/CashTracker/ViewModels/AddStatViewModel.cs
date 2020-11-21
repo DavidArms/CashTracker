@@ -22,14 +22,21 @@ namespace CashTracker.ViewModels
         /// </summary>
         public Job ActiveJob
         {
-            get => _activeJob;
-            set
+            get
             {
-                _activeJob = value;
-                OnPropertyChanged();
+                //TODO: Update language version to get null coalescing assignment operator
+                if (_activeJob == null)
+                    ActiveJob = Task.Run(async () => await _jobRepo.FirstOrDefaultAsync()).Result;
+
+                return _activeJob;
             }
+            set => SetProperty(ref _activeJob, value);
         }
 
+        /// <summary>
+        /// The ID of the Job to store in <see cref="ActiveJob"/>
+        /// </summary>
+        /// TODO: When Shell finally supports passing objects, then remove this and update the query property to point at ActiveJob
         public string JobID
         {
             set

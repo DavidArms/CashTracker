@@ -35,6 +35,12 @@ namespace CashTracker.Database
         public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
             => Connection.Table<T>().FirstOrDefaultAsync(predicate);
 
+        /// <summary>
+        /// Gets the first <typeparamref name="T"/> if one exists
+        /// </summary>
+        /// <returns></returns>
+        public async Task<T> FirstOrDefaultAsync() => await Connection.Table<T>().FirstOrDefaultAsync();
+
         /// <inheritdoc/>
         public async Task AddAsync(T entity) => await Connection.InsertAsync(entity);
 
@@ -55,8 +61,6 @@ namespace CashTracker.Database
         public async Task<int> CountAll() => await Connection.Table<T>().CountAsync();
 
         /// <inheritdoc/>
-        public Task<int> CountWhere(Expression<Func<T, bool>> predicate) => Connection.Table<T>().CountAsync(predicate);
-
-
+        public async Task<int> CountWhere(Expression<Func<T, bool>> predicate) => await Connection.Table<T>().CountAsync(predicate);
     }
 }
