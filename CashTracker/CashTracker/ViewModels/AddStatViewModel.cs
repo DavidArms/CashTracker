@@ -1,6 +1,9 @@
 ﻿using CashTracker.Database;
 using CashTracker.Models;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -16,6 +19,19 @@ namespace CashTracker.ViewModels
         private double? _totalHours;
         private double? _totalMoney;
 
+        private ObservableCollection<Job> _allJobs = new ObservableCollection<Job>();
+        public ObservableCollection<Job> AllJobs
+        {
+            get
+            {
+                if (_allJobs == null || !_allJobs.Any())
+                    AllJobs = new ObservableCollection<Job>( Task.Run(async () => await _jobRepo.GetAllAsync()).Result.ToList());
+
+                return _allJobs;
+            }
+            set => SetProperty(ref _allJobs, value);
+        }
+
         private Job _activeJob;
         /// <summary>
         /// The currently selected job
@@ -30,7 +46,11 @@ namespace CashTracker.ViewModels
 
                 return _activeJob;
             }
-            set => SetProperty(ref _activeJob, value);
+            set
+            {
+                SetProperty(ref _activeJob, value);
+                OnPropertyChanged(nameof(AllJobs));
+            }
         }
 
         /// <summary>

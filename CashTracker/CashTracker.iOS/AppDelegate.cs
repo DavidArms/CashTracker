@@ -25,7 +25,7 @@ namespace CashTracker.iOS
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
+            Forms9Patch.iOS.Settings.Initialize(this);
             return base.FinishedLaunching(app, options);
         }
     }

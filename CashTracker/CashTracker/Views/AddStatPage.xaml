@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vms="clr-namespace:CashTracker.ViewModels"
+             xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
              x:Class="CashTracker.Views.AddStatPage"
              Title="Add Stat">
     <ContentPage.BindingContext>
@@ -10,24 +11,34 @@
     
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <StackLayout HorizontalOptions="Center">
-
-                <Label Text="{Binding ActiveJob.Name}"
-                       HorizontalTextAlignment="Center" 
-                       FontAttributes="Bold"
-                       FontSize="30"
-                       TextColor="Black"/>
-                <Label Text="{Binding ActiveJob.Employer}" 
-                    HorizontalTextAlignment="Center" 
-                       FontAttributes="Bold"
-                       FontSize="12"
-                       TextColor="Black"
-                       Margin="0,0,0,20"/>
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <f9p:Button x:Name="ChooseJobButton"
+                            Padding="10"
+                            OutlineRadius="30"
+                            Background="White"
+                            HasShadow="True"
+                            SelectedTextColor="Blue"
+                            Clicked="ChooseJobButton_Clicked">
+                    <StackLayout>
+                        <Label x:Name="JobName"
+                            Text="{Binding ActiveJob.Name}"
+                               HorizontalTextAlignment="Center" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                               TextColor="Black"/>
+                        <Label Text="{Binding ActiveJob.Employer}" 
+                               HorizontalTextAlignment="Center" 
+                               FontAttributes="Bold"
+                               FontSize="12"
+                               TextColor="Black"/>
+                    </StackLayout>
+                </f9p:Button>
                 <Entry x:Name="MoneyMadeEntry" 
                    Placeholder="$0.00" 
                    Text="{Binding TotalMoneyString}" 
                    Keyboard="Numeric"
-                   HorizontalTextAlignment="Center"/>
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"/>
                 <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Entry x:Name="HoursWorkedEntry"
                    Placeholder="0 hours" 
