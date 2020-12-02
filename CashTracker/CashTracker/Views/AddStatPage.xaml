@@ -10,24 +10,33 @@
     
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <StackLayout HorizontalOptions="Center">
-
-                <Label Text="{Binding ActiveJob.Name}"
-                       HorizontalTextAlignment="Center" 
-                       FontAttributes="Bold"
-                       FontSize="30"
-                       TextColor="Black"/>
-                <Label Text="{Binding ActiveJob.Employer}" 
-                    HorizontalTextAlignment="Center" 
-                       FontAttributes="Bold"
-                       FontSize="12"
-                       TextColor="Black"
-                       Margin="0,0,0,20"/>
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="8">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ChooseJobButton_Clicked"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Label x:Name="JobName"
+                            Text="{Binding ActiveJob.Name}"
+                               HorizontalTextAlignment="Center" 
+                               FontAttributes="Bold"
+                               FontSize="30"
+                               TextColor="Black"/>
+                        <Label Text="{Binding ActiveJob.Employer}" 
+                               HorizontalTextAlignment="Center" 
+                               FontAttributes="Bold"
+                               FontSize="12"
+                               TextColor="Black"/>
+                    </StackLayout>
+                </Frame>
                 <Entry x:Name="MoneyMadeEntry" 
                    Placeholder="$0.00" 
                    Text="{Binding TotalMoneyString}" 
                    Keyboard="Numeric"
-                   HorizontalTextAlignment="Center"/>
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"/>
                 <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Entry x:Name="HoursWorkedEntry"
                    Placeholder="0 hours" 
