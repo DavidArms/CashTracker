@@ -1,4 +1,4 @@
-﻿
+
 using CashTracker.Models;
 using CashTracker.ViewModels;
 using BubblePopup = Forms9Patch.BubblePopup;
@@ -38,15 +38,19 @@ namespace CashTracker.Views
             var jobList = new ListView
             {
                 ItemsSource = _viewModel.AllJobs,
-                ItemTemplate = jobTemplate
-
+                ItemTemplate = jobTemplate,
+                // These size requests are required to squeeze this content inside of the bubble popup. Otherwise the popup's pointer may break
+                WidthRequest = 50, 
+                HeightRequest = 100
             };
 
             _jobsPopup = new BubblePopup(JobName)
             {
                 Content = jobList,
                 HeightRequest = 300,
-                WidthRequest = 200
+                WidthRequest = 200,
+                IsAnimationEnabled = true,
+                PointerDirection = Forms9Patch.PointerDirection.Up,
             };
         }
 
