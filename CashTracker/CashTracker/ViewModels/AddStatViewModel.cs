@@ -2,8 +2,6 @@
 using CashTracker.Models;
 using MvvmHelpers;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -19,17 +17,11 @@ namespace CashTracker.ViewModels
         private double? _totalHours;
         private double? _totalMoney;
 
-        private ObservableCollection<Job> _allJobs = new ObservableCollection<Job>();
-        public ObservableCollection<Job> AllJobs
+        private ObservableRangeCollection<Job> _allJobs = new ObservableRangeCollection<Job>();
+        public ObservableRangeCollection<Job> AllJobs
         {
-            get
-            {
-                if (_allJobs == null || !_allJobs.Any())
-                    AllJobs = new ObservableCollection<Job>( Task.Run(async () => await _jobRepo.GetAllAsync()).Result.ToList());
-
-                return _allJobs;
-            }
-            set => SetProperty(ref _allJobs, value);
+            get => _allJobs;
+            set => SetProperty(ref _allJobs, value); //TODO: Use the OnChanged action to handle the case where there are no jobs
         }
 
         private Job _activeJob;
@@ -69,7 +61,7 @@ namespace CashTracker.ViewModels
                     ActiveJob = jobToLoad;
             }
         }
-
+        #region StupidProps
         /// <summary>
         /// The total hours worked
         /// </summary>
@@ -150,6 +142,7 @@ namespace CashTracker.ViewModels
         /// The date that the user worked
         /// </summary>
         public DateTime DateWorked { get; set; }
+        #endregion
 
         /// <summary>
         /// Page for adding statistics for a job
@@ -160,6 +153,8 @@ namespace CashTracker.ViewModels
             TotalMoney = null;
             DateWorked = DateTime.Today;
             SaveStat = new Command(SaveNewStat);
+
+            Task.Run(async () => AllJobs.AddRange(await _jobRepo.GetAllAsync()));
         }
 
         public ICommand SaveStat { get; }
