@@ -18,17 +18,20 @@
                         <TapGestureRecognizer Tapped="ChooseJobButton_Clicked"/>
                     </Frame.GestureRecognizers>
                     <StackLayout>
+                        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="62"/>
                         <Label x:Name="JobName"
-                            Text="{Binding ActiveJob.Name}"
+                               Text="{Binding ActiveJob.Name}"
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="30"
-                               TextColor="Black"/>
+                               TextColor="Black"
+                               IsVisible="{Binding IsNotBusy}"/>
                         <Label Text="{Binding ActiveJob.Employer}" 
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="12"
-                               TextColor="Black"/>
+                               TextColor="Black"
+                               IsVisible="{Binding IsNotBusy}"/>
                     </StackLayout>
                 </Frame>
                 <Entry x:Name="MoneyMadeEntry" 
@@ -47,7 +50,7 @@
                 <DatePicker x:Name="DateWorked"
                         Date="{Binding DateWorked}"/>
                 <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Button x:Name="SubmitButton" Text="Save" Command="{Binding SaveStat}"/>
+                <Button x:Name="SubmitButton" Text="Save" Command="{Binding SaveStat}" IsEnabled="{Binding IsNotBusy}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

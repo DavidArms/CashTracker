@@ -21,7 +21,11 @@ namespace CashTracker.Views
         public AddStatPage()
         {
             InitializeComponent();
+            InitializeBubblePopup();
+        }
 
+        private void InitializeBubblePopup()
+        {
             var jobTemplate = new DataTemplate(() =>
             {
                 var stack = new StackLayout();
@@ -42,7 +46,7 @@ namespace CashTracker.Views
                 ItemsSource = _viewModel.AllJobs,
                 ItemTemplate = jobTemplate,
                 // These size requests are required to squeeze this content inside of the bubble popup. Otherwise the popup's pointer may break
-                WidthRequest = 50, 
+                WidthRequest = 50,
                 HeightRequest = 100
             };
             _jobsListView.ItemSelected += (async (object sender, SelectedItemChangedEventArgs args) => await JobSelectedAsync(args));
@@ -59,6 +63,7 @@ namespace CashTracker.Views
 
         private async void ChooseJobButton_Clicked(object sender, System.EventArgs e)
         {
+            _viewModel.IsBusy = true;
             await _jobsPopup.PushAsync();
         }
 
@@ -68,6 +73,7 @@ namespace CashTracker.Views
             {
                 _viewModel.ActiveJob = newJob;
                 await _jobsPopup.PopAsync();
+                _viewModel.IsBusy = false;
             }
         }
     }
