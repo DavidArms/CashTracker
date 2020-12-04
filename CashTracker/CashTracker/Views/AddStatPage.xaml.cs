@@ -4,6 +4,7 @@ using CashTracker.ViewModels;
 using BubblePopup = Forms9Patch.BubblePopup;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Threading.Tasks;
 
 namespace CashTracker.Views
 {
@@ -15,6 +16,7 @@ namespace CashTracker.Views
         // rendered by InitializeComponent which means this should never hit a null reference exception.
         private AddStatViewModel _viewModel => (AddStatViewModel)BindingContext;
         private BubblePopup _jobsPopup;
+        private ListView _jobsListView;
 
         public AddStatPage()
         {
@@ -35,7 +37,7 @@ namespace CashTracker.Views
 
                 return new ViewCell { View = stack };
             });
-            var jobList = new ListView
+            _jobsListView = new ListView
             {
                 ItemsSource = _viewModel.AllJobs,
                 ItemTemplate = jobTemplate,
@@ -43,10 +45,11 @@ namespace CashTracker.Views
                 WidthRequest = 50, 
                 HeightRequest = 100
             };
+            _jobsListView.ItemSelected += (async (object sender, SelectedItemChangedEventArgs args) => await JobSelectedAsync(args));
 
             _jobsPopup = new BubblePopup(JobName)
             {
-                Content = jobList,
+                Content = _jobsListView,
                 HeightRequest = 300,
                 WidthRequest = 200,
                 IsAnimationEnabled = true,
@@ -57,6 +60,15 @@ namespace CashTracker.Views
         private async void ChooseJobButton_Clicked(object sender, System.EventArgs e)
         {
             await _jobsPopup.PushAsync();
+        }
+
+        private async Task JobSelectedAsync(SelectedItemChangedEventArgs args)
+        {
+            if (args.SelectedItem is Job newJob)
+            {
+                _viewModel.ActiveJob = newJob;
+                await _jobsPopup.PopAsync();
+            }
         }
     }
 }
