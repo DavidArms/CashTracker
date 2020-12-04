@@ -1,7 +1,5 @@
 ﻿using CashTracker.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MvvmHelpers;
 using Xamarin.Forms;
 
 namespace CashTracker.ViewModels

@@ -1,7 +1,7 @@
 ﻿using CashTracker.Database;
 using CashTracker.Models;
+using MvvmHelpers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
