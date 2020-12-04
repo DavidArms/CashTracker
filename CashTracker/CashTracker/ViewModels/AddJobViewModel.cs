@@ -1,5 +1,6 @@
 ﻿using CashTracker.Database;
 using CashTracker.Models;
+using MvvmHelpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
