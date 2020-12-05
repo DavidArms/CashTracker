@@ -1,7 +1,9 @@
-﻿using CashTracker.Database;
+using CashTracker.Database;
 using CashTracker.Models;
 using MvvmHelpers;
 using System;
+using TypeConverter = System.ComponentModel.TypeConverter;
+using DoubleConverter = System.ComponentModel.DoubleConverter;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -61,88 +63,36 @@ namespace CashTracker.ViewModels
                     ActiveJob = jobToLoad;
             }
         }
-        #region StupidProps
+
         /// <summary>
         /// The total hours worked
         /// </summary>
-        private double? TotalHours
+        [TypeConverter(typeof(DoubleConverter))]
+        public double? TotalHours
         {
             get => _totalHours;
-            set
-            {
-                _totalHours = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _totalHours, value, onChanged: RefreshCanExecutes);
         }
 
-        /// <summary>
-        /// The string version of the Total Hours
-        /// </summary>
-        /// <remarks>Needed to bind to the Entry control</remarks>
-        public string TotalHoursString
+        public void RefreshCanExecutes()
         {
-            get
-            {
-                if (TotalHours == null)
-                    return "";
-                return TotalHours.ToString();
-            }
-            set
-            {
-                try
-                {
-                    TotalHours = double.Parse(value);
-                }
-                catch
-                {
-                    TotalHours = null;
-                }
-            }
+            (SaveStat as Command).ChangeCanExecute();
         }
 
         /// <summary>
         /// The total money earned
         /// </summary>
-        private double? TotalMoney
+        [TypeConverter(typeof(DoubleConverter))]
+        public double? TotalMoney
         {
             get => _totalMoney;
-            set
-            {
-                _totalMoney = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// The string version of the total money earned
-        /// </summary>
-        /// <remarks>Needed for binding to the Entry control</remarks>
-        public string TotalMoneyString
-        {
-            get
-            {
-                if (TotalMoney == null)
-                    return "";
-                return TotalMoney.ToString();
-            }
-            set
-            {
-                try
-                {
-                    TotalMoney = double.Parse(value);
-                }
-                catch
-                {
-                    TotalMoney = null;
-                }
-            }
+            set => SetProperty(ref _totalMoney, value, onChanged: RefreshCanExecutes);
         }
 
         /// <summary>
         /// The date that the user worked
         /// </summary>
         public DateTime DateWorked { get; set; }
-        #endregion
 
         /// <summary>
         /// Page for adding statistics for a job
@@ -152,7 +102,7 @@ namespace CashTracker.ViewModels
             TotalHours = null;
             TotalMoney = null;
             DateWorked = DateTime.Today;
-            SaveStat = new Command(SaveNewStat);
+            SaveStat = new Command(SaveNewStat, canExecute: () => IsNotBusy && ValidateInputs());
 
             Task.Run(async () => AllJobs.AddRange(await _jobRepo.GetAllAsync()));
         }
@@ -189,7 +139,7 @@ namespace CashTracker.ViewModels
         private bool ValidateInputs()
         {
             //TODO: Might want to build an error message for displaying instead
-            return TotalHours != null && TotalMoney != null;
+            return TotalHours > 0 && TotalMoney != null;
         }
     }
 }

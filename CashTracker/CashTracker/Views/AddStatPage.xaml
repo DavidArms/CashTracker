@@ -36,21 +36,21 @@
                 </Frame>
                 <Entry x:Name="MoneyMadeEntry" 
                    Placeholder="$0.00" 
-                   Text="{Binding TotalMoneyString}" 
+                   Text="{Binding TotalMoney}" 
                    Keyboard="Numeric"
                    HorizontalTextAlignment="Center"
                    HorizontalOptions="Center"/>
                 <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Entry x:Name="HoursWorkedEntry"
                    Placeholder="0 hours" 
-                   Text="{Binding TotalHoursString}"
+                   Text="{Binding TotalHours}"
                    Keyboard="Numeric"
                    HorizontalTextAlignment="Center"/>
                 <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <DatePicker x:Name="DateWorked"
                         Date="{Binding DateWorked}"/>
                 <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Button x:Name="SubmitButton" Text="Save" Command="{Binding SaveStat}" IsEnabled="{Binding IsNotBusy}"/>
+                <Button x:Name="SubmitButton" Text="Save" Command="{Binding SaveStat}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
