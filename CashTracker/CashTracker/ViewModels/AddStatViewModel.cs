@@ -2,8 +2,6 @@ using CashTracker.Database;
 using CashTracker.Models;
 using MvvmHelpers;
 using System;
-using TypeConverter = System.ComponentModel.TypeConverter;
-using DoubleConverter = System.ComponentModel.DoubleConverter;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -67,22 +65,15 @@ namespace CashTracker.ViewModels
         /// <summary>
         /// The total hours worked
         /// </summary>
-        [TypeConverter(typeof(DoubleConverter))]
         public double? TotalHours
         {
             get => _totalHours;
             set => SetProperty(ref _totalHours, value, onChanged: RefreshCanExecutes);
         }
 
-        public void RefreshCanExecutes()
-        {
-            (SaveStat as Command).ChangeCanExecute();
-        }
-
         /// <summary>
         /// The total money earned
         /// </summary>
-        [TypeConverter(typeof(DoubleConverter))]
         public double? TotalMoney
         {
             get => _totalMoney;
@@ -105,6 +96,11 @@ namespace CashTracker.ViewModels
             SaveStat = new Command(SaveNewStat, canExecute: () => IsNotBusy && ValidateInputs());
 
             Task.Run(async () => AllJobs.AddRange(await _jobRepo.GetAllAsync()));
+        }
+
+        public void RefreshCanExecutes()
+        {
+            (SaveStat as Command).ChangeCanExecute();
         }
 
         public ICommand SaveStat { get; }
@@ -139,7 +135,7 @@ namespace CashTracker.ViewModels
         private bool ValidateInputs()
         {
             //TODO: Might want to build an error message for displaying instead
-            return TotalHours > 0 && TotalMoney != null;
+            return TotalHours > 0 && TotalMoney.HasValue;
         }
     }
 }
