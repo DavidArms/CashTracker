@@ -4,30 +4,30 @@
        xmlns:local="clr-namespace:CashTracker.Views"
        Title="CashTracker"
        x:Class="CashTracker.AppShell"
-       FlyoutBackgroundColor="{StaticResource PrimaryColor}">
+       FlyoutBackgroundColor="{DynamicResource PrimaryColor}">
 
     <Shell.Resources>
         <ResourceDictionary>
 
             <Style TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="{StaticResource SecondaryTextColor}"/>
-                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                <Setter Property="PlaceholderColor" Value="{DynamicResource SecondaryTextColor}"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
             </Style>
 
             <Style TargetType="DatePicker">
-                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
             </Style>
 
             <Style TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-                <Setter Property="BorderColor" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource SecondaryColor}"/>
                 <Setter Property="CornerRadius" Value="5"/>
                 <Setter Property="Padding" Value="5"/>
                 <Setter Property="HasShadow" Value="True"/>
             </Style>
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
             </Style>
 
             <Style TargetType="Button">
@@ -36,14 +36,14 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
+                                    <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
-                                    <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}"/>
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}" />
+                                    <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -54,16 +54,16 @@
 
             
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
-                <Setter Property="Shell.ForegroundColor" Value="{StaticResource SecondaryColor}" /> <!--hamburger icon-->
-                <Setter Property="Shell.TitleColor" Value="{StaticResource PrimaryTextColor}" />
-                <Setter Property="Shell.DisabledColor" Value="{StaticResource PrimaryDisabledColor}" />
+                <Setter Property="Shell.BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="Shell.ForegroundColor" Value="{DynamicResource SecondaryColor}" /> <!--hamburger icon-->
+                <Setter Property="Shell.TitleColor" Value="{DynamicResource PrimaryTextColor}" />
+                <Setter Property="Shell.DisabledColor" Value="{DynamicResource PrimaryDisabledColor}" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryColor}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource SecondaryColor}"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TertiaryTextColor}"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource PrimaryTextColor}"/> <!--selected tab text color-->
-                <Setter Property="Shell.FlyoutBackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{DynamicResource SecondaryColor}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{DynamicResource TertiaryTextColor}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource PrimaryTextColor}"/> <!--selected tab text color-->
+                <Setter Property="Shell.FlyoutBackgroundColor" Value="{DynamicResource PrimaryColor}"/>
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
@@ -75,14 +75,14 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{DynamicResource PrimaryTextColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{DynamicResource PrimaryTextColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -96,8 +96,8 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource PrimaryTextColor}" />
-                                    <Setter TargetName="FlyoutItemLayout" Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{DynamicResource PrimaryTextColor}" />
+                                    <Setter TargetName="FlyoutItemLayout" Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -123,11 +123,11 @@
      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyout-header-->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid BackgroundColor="{StaticResource PrimaryColor}">
+            <Grid BackgroundColor="{DynamicResource PrimaryColor}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80" />
                 </Grid.RowDefinitions>
-                <Label Text="Cash Tracker" TextColor="{StaticResource PrimaryTextColor}" FontAttributes="Bold"
+                <Label Text="Cash Tracker" TextColor="{DynamicResource PrimaryTextColor}" FontAttributes="Bold"
                        FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
             </Grid>
         </DataTemplate>
