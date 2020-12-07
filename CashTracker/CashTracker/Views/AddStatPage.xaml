@@ -4,6 +4,7 @@
              xmlns:vms="clr-namespace:CashTracker.ViewModels"
              xmlns:converters="clr-namespace:CashTracker.Utilities.Converters"
              x:Class="CashTracker.Views.AddStatPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="Add Stat">
 
     <ContentPage.Resources>
@@ -19,9 +20,7 @@
     <ContentPage.Content>
         <StackLayout Padding="10">
             <StackLayout HorizontalOptions="FillAndExpand">
-                <Frame BorderColor="Gray"
-                       CornerRadius="5"
-                       Padding="8">
+                <Frame>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ChooseJobButton_Clicked"/>
                     </Frame.GestureRecognizers>
@@ -32,13 +31,11 @@
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="30"
-                               TextColor="Black"
                                IsVisible="{Binding IsNotBusy}"/>
                         <Label Text="{Binding ActiveJob.Employer}" 
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="12"
-                               TextColor="Black"
                                IsVisible="{Binding IsNotBusy}"/>
                     </StackLayout>
                 </Frame>
@@ -53,7 +50,7 @@
                        Keyboard="Numeric"
                        HorizontalTextAlignment="Center"/>
                 <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <DatePicker Date="{Binding DateWorked}"/>
+                <DatePicker Date="{Binding DateWorked}" WidthRequest="100" HorizontalOptions="Center"/>
                 <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Button Text="Save" Command="{Binding SaveStat}"/>
             </StackLayout>

@@ -1,4 +1,5 @@
-﻿using CashTracker.Views;
+﻿using CashTracker.Styles;
+using CashTracker.Views;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,6 +11,14 @@ namespace CashTracker
         {
             await Shell.Current.GoToAsync("AddJobPage");
             Shell.Current.FlyoutIsPresented = false;
+        });
+
+        public ICommand ToggleThemeCommand => new Command(() =>
+        {
+            if (Application.Current.Resources is LightTheme)
+                Application.Current.Resources = new DarkTheme();
+            else
+                Application.Current.Resources = new LightTheme();
         });
 
         public AppShell()
