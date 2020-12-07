@@ -12,6 +12,11 @@ namespace CashTracker
             Shell.Current.FlyoutIsPresented = false;
         });
 
+        public ICommand ToggleThemeCommand => new Command(async () =>
+        {
+            
+        });
+
         public AppShell()
         {
             InitializeComponent();
