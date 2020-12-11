@@ -39,6 +39,8 @@ namespace CashTracker
                 }
             }
 
+            //TODO: Use Xamarin Essentials Preferences to save/load selected theme
+
         });
 
         public Theme CurrentTheme { get; set; } = Theme.Light;
