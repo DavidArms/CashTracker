@@ -1,5 +1,6 @@
 ﻿using CashTracker.Styles;
 using CashTracker.Views;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -15,11 +16,32 @@ namespace CashTracker
 
         public ICommand ToggleThemeCommand => new Command(() =>
         {
-            if (Application.Current.Resources is LightTheme)
-                Application.Current.Resources = new DarkTheme();
-            else
-                Application.Current.Resources = new LightTheme();
+            var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+
+                switch (CurrentTheme)
+                {
+                    case Theme.Light:
+                        mergedDictionaries.Add(new DarkTheme());
+                        CurrentTheme = Theme.Dark;
+                        break;
+                    case Theme.Dark:
+                        mergedDictionaries.Add(new LightTheme());
+                        CurrentTheme = Theme.Light;
+                        break;
+                    default:
+                        mergedDictionaries.Add(new LightTheme());
+                        CurrentTheme = Theme.Light;
+                        break;
+                }
+            }
+
         });
+
+        public Theme CurrentTheme { get; set; } = Theme.Light;
 
         public AppShell()
         {
