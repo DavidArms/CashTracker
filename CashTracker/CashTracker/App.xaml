@@ -4,7 +4,7 @@
              x:Class="CashTracker.App">
     <Application.Resources>
         <!--Global Color Theming-->
-        <ResourceDictionary Source="Styles/LightTheme.xaml" />
+        <ResourceDictionary Source="Styles/TrippyTheme.xaml" />
 
         <!--Global Control Theming-->
         <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
