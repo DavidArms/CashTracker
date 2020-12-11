@@ -4,7 +4,6 @@
              xmlns:vms="clr-namespace:CashTracker.ViewModels"
              xmlns:converters="clr-namespace:CashTracker.Utilities.Converters"
              x:Class="CashTracker.Views.AddStatPage"
-             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="Add Stat">
 
     <ContentPage.Resources>
