@@ -32,6 +32,30 @@
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
 
+        <!--Below we are targeting the grid type, but this is actually used for styling the selected cell in CollectionViews-->
+        <!--This is Microsoft's recommended approach for CollectionView styling: 
+            https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/collectionview/selection#change-selected-item-color-->
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{DynamicResource TransparentColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{DynamicResource SecondaryColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
         <Style TargetType="Button">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>

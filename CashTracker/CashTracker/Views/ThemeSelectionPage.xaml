@@ -13,8 +13,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Try out different app themes!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                   Margin="0,20,0,0"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
             <CollectionView x:Name="ThemeCollection"
                             ItemsSource="{Binding AvailableThemes}" 
                             SelectionChangedCommand="{Binding ThemeSelectedCommand}"
@@ -42,9 +43,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Entry Placeholder="Fake Entry Example"/>
-            <Label Text="Fake Label Example"/>
-            <Button Text="Fake Button Example"/>
+            <Entry Placeholder="Fake Entry Example" HorizontalOptions="Center"/>
+            <Label Text="Fake Label Example" HorizontalOptions="Center"/>
+            <Button Text="Fake Button Example" HorizontalOptions="Center" Margin="0,0,0,20"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
