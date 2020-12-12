@@ -16,8 +16,8 @@ namespace CashTracker
 
         public ICommand SelectThemeCommand => new Command(async () =>
         {
-            await Shell.Current.GoToAsync("ThemeSelectionPage");
             Shell.Current.FlyoutIsPresented = false;
+            await Shell.Current.GoToAsync("ThemeSelectionPage");
         });
 
         public AppShell()
