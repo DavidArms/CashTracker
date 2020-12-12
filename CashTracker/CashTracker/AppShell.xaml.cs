@@ -1,6 +1,6 @@
 ﻿using CashTracker.Styles;
 using CashTracker.Views;
-using System.Linq;
+using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -14,36 +14,11 @@ namespace CashTracker
             Shell.Current.FlyoutIsPresented = false;
         });
 
-        public ICommand ToggleThemeCommand => new Command(() =>
+        public ICommand SelectThemeCommand => new Command(async () =>
         {
-            var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
-
-                switch (CurrentTheme)
-                {
-                    case Theme.Light:
-                        mergedDictionaries.Add(new DarkTheme());
-                        CurrentTheme = Theme.Dark;
-                        break;
-                    case Theme.Dark:
-                        mergedDictionaries.Add(new LightTheme());
-                        CurrentTheme = Theme.Light;
-                        break;
-                    default:
-                        mergedDictionaries.Add(new LightTheme());
-                        CurrentTheme = Theme.Light;
-                        break;
-                }
-            }
-
-            //TODO: Use Xamarin Essentials Preferences to save/load selected theme
-
+            await Shell.Current.GoToAsync("ThemeSelectionPage");
+            Shell.Current.FlyoutIsPresented = false;
         });
-
-        public Theme CurrentTheme { get; set; } = Theme.Light;
 
         public AppShell()
         {
@@ -51,6 +26,7 @@ namespace CashTracker
             BindingContext = this;
 
             Routing.RegisterRoute(nameof(AddJobPage), typeof(AddJobPage));
+            Routing.RegisterRoute(nameof(ThemeSelectionPage), typeof(ThemeSelectionPage));
         }
     }
 }

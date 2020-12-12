@@ -73,7 +73,7 @@
     </FlyoutItem>
 
     <MenuItem Text="Add Job" StyleClass="MenuItemLayoutStyle" Command="{Binding AddJobCommand}"/>
-    <MenuItem Text="Toggle Theme" StyleClass="MenuItemLayoutStyle" Command="{Binding ToggleThemeCommand}"/>
+    <MenuItem Text="Change Theme" StyleClass="MenuItemLayoutStyle" Command="{Binding SelectThemeCommand}"/>
 
      <!--This header appears at the top of the Flyout.
      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyout-header-->

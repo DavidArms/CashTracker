@@ -44,7 +44,7 @@
                         </VisualState>
                         <VisualState x:Name="Disabled">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}" />
+                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryDisabledColor}" />
                                 <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
                             </VisualState.Setters>
                         </VisualState>

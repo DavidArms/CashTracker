@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="CashTracker.Styles.BumblebeeTheme">
+    <Color x:Key="PageBackgroundColor">#FFEF00</Color>
+    <Color x:Key="PrimaryColor">#E5D700</Color>
+    <Color x:Key="SecondaryColor">Black</Color>
+    <Color x:Key="PrimaryTextColor">White</Color>
+    <Color x:Key="SecondaryTextColor">Silver</Color>
+    <Color x:Key="TertiaryTextColor">#F23827</Color>
+    <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="PrimaryDisabledColor">#F23827</Color>
+
+</ResourceDictionary>
