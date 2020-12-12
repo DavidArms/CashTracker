@@ -2,13 +2,17 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="CashTracker.Styles.TrippyTheme">
+    <!--Background and Primary should be similar-->
     <Color x:Key="PageBackgroundColor">#7C05F2</Color>
     <Color x:Key="PrimaryColor">#6204BF</Color>
+    <!--Secondary and PrimaryText will appear on top of each so should be different to ensure visibility-->
     <Color x:Key="SecondaryColor">#F205CB</Color> 
     <Color x:Key="PrimaryTextColor">WhiteSmoke</Color>
+    <Color x:Key="ButtonTextColor">WhiteSmoke</Color> <!--Note: Button backgrounds use the Secondary color-->
     <Color x:Key="SecondaryTextColor">Black</Color>
     <Color x:Key="TertiaryTextColor">#FFEF00</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
-    <Color x:Key="PrimaryDisabledColor">#F23827</Color>
+    <Color x:Key="PrimaryDisabledColor">Gray</Color>
+    <Color x:Key="DisabledTextColor">#404040</Color>
 
 </ResourceDictionary>

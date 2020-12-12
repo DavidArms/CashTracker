@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace CashTracker.Styles
 {
@@ -13,8 +15,28 @@ namespace CashTracker.Styles
         Bumblebee
     }
 
+    /// <summary>
+    /// Class for interacting with the application theme
+    /// </summary>
     public class AppTheme
     {
+        private const string THEME_KEY = "SelectedTheme";
+        private const string DEFAULT_THEME = "Light";
+
+        /// <summary>
+        /// Sets the default application theme
+        /// </summary>
+        public static void LoadDefault()
+        {
+            var themeToLoad = Preferences.Get(THEME_KEY, DEFAULT_THEME);
+            if (Enum.TryParse(themeToLoad, out Theme newTheme))
+                Set(newTheme);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Theme"/> to use across the app
+        /// </summary>
+        /// <param name="selectedTheme"></param>
         public static void Set(Theme selectedTheme)
         {
             var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
@@ -43,7 +65,7 @@ namespace CashTracker.Styles
                 }
             }
 
-            //TODO: Use Xamarin Essentials Preferences to save/load selected theme
+            Preferences.Set(THEME_KEY, selectedTheme.ToString());
         }
     }
 }

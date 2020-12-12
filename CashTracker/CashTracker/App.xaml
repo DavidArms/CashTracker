@@ -38,14 +38,15 @@
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
-                                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
+                                <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}"/>
+                                <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}"/>
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Disabled">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryDisabledColor}" />
-                                <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
+                                <Setter Property="TextColor" Value="{DynamicResource DisabledTextColor}"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>

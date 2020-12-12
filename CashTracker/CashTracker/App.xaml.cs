@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using CashTracker.Styles;
+using Xamarin.Forms;
 
 namespace CashTracker
 {
@@ -13,6 +14,7 @@ namespace CashTracker
         {
             InitializeComponent();
             MainPage = new AppShell();
+            AppTheme.LoadDefault();
         }
 
         protected override void OnStart()
