@@ -27,10 +27,16 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Frame WidthRequest="20" HeightRequest="20" BackgroundColor="AliceBlue"/>
+                            <Frame WidthRequest="40" HeightRequest="40" Grid.Column="0">
+                                <AbsoluteLayout>
+                                    <Polygon Points="0, 0 90, 0 45, 45" Fill="{Binding PrimaryColor}"/>
+                                    <Polygon Points="0,0 45,45 0,90" Fill="{Binding SecondaryColor}"/>
+                                </AbsoluteLayout>
+                            </Frame>
 
                             <Label Grid.Column="1"
-                                   Text="{Binding .}"
+                                   VerticalOptions="Center"
+                                   Text="{Binding Name}"
                                    FontAttributes="Bold" />
                         </Grid>
                     </DataTemplate>

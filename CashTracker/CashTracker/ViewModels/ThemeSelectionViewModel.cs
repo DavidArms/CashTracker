@@ -13,12 +13,12 @@ namespace CashTracker.ViewModels
     /// </summary>
     public class ThemeSelectionViewModel : BaseViewModel
     {
-        private List<string> _availableThemes;
+        private List<ThemePreview> _availableThemes;
 
         /// <summary>
-        /// The string names of themes that can be applied across the apps
+        /// The collection of themes that can be applied across the apps
         /// </summary>
-        public List<string> AvailableThemes
+        public List<ThemePreview> AvailableThemes
         {
             get => _availableThemes;
             set => SetProperty(ref _availableThemes, value);
@@ -31,12 +31,53 @@ namespace CashTracker.ViewModels
 
         public ThemeSelectionViewModel()
         {
-            AvailableThemes = Enum.GetNames(typeof(Theme)).ToList();
-            ThemeSelectedCommand = new Command((object selectedTheme) =>
+            AvailableThemes = ((Theme[])Enum.GetValues(typeof(Theme)))
+                                            .Select(theme => new ThemePreview(theme))
+                                            .ToList();
+
+            ThemeSelectedCommand = new Command((selectedTheme) =>
             {
-                if (Enum.TryParse(selectedTheme.ToString(), out Theme newTheme))
+                var themeName = ((ThemePreview)selectedTheme).Name;
+
+                if (Enum.TryParse(themeName, out Theme newTheme))
                     AppTheme.Set(newTheme);
             });
+        }
+
+        public class ThemePreview
+        {
+            public string Name { get; set; }
+            public SolidColorBrush PrimaryColor { get; set; }
+            public SolidColorBrush SecondaryColor { get; set; }
+
+            public ThemePreview(Theme themeToLoad)
+            {
+                ResourceDictionary theme;
+                switch (themeToLoad)
+                {
+                    case Theme.Light:
+                        theme = new LightTheme();
+                        break;
+                    case Theme.Dark:
+                        theme = new DarkTheme();
+                        break;
+                    case Theme.Trippy:
+                        theme = new TrippyTheme();
+                        break;
+                    case Theme.Bumblebee:
+                        theme = new BumblebeeTheme();
+                        break;
+                    default:
+                        theme = new LightTheme();
+                        break;
+                }
+
+                Name = themeToLoad.ToString();
+                var primaryColorType = (Color)theme["PrimaryColor"];
+                PrimaryColor = new SolidColorBrush(primaryColorType);
+                var secondaryColorType = (Color)theme["SecondaryColor"];
+                SecondaryColor = new SolidColorBrush(secondaryColorType);
+            }
         }
     }
 }
