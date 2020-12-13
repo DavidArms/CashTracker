@@ -15,6 +15,8 @@ namespace CashTracker
             Device.SetFlags(new string[] { "Shapes_Experimental" });
 
             InitializeComponent();
+            DependencyService.Register<IStatusBarStyleManager>();
+
             MainPage = new AppShell();
             AppTheme.LoadDefault();
         }

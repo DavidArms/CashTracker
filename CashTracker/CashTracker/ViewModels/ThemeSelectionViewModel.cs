@@ -44,38 +44,36 @@ namespace CashTracker.ViewModels
             });
         }
 
-        public class ThemePreview
+        /// <summary>
+        /// Struct which is meant to help reveal/visualize the primary elements of a <see cref="Theme"/>
+        /// </summary>
+        public readonly struct ThemePreview
         {
-            public string Name { get; set; }
-            public SolidColorBrush PrimaryColor { get; set; }
-            public SolidColorBrush SecondaryColor { get; set; }
+            /// <summary>
+            /// The name of the theme
+            /// </summary>
+            public string Name { get;}
+
+            /// <summary>
+            /// The primary color for the theme as a <see cref="SolidColorBrush"/>
+            /// </summary>
+            public SolidColorBrush PrimaryColor { get; }
+
+            /// <summary>
+            /// The secondary color for the theme as a <see cref="SolidColorBrush"/>
+            /// </summary>
+            public SolidColorBrush SecondaryColor { get; }
 
             public ThemePreview(Theme themeToLoad)
             {
-                ResourceDictionary theme;
-                switch (themeToLoad)
-                {
-                    case Theme.Light:
-                        theme = new LightTheme();
-                        break;
-                    case Theme.Dark:
-                        theme = new DarkTheme();
-                        break;
-                    case Theme.Trippy:
-                        theme = new TrippyTheme();
-                        break;
-                    case Theme.Bumblebee:
-                        theme = new BumblebeeTheme();
-                        break;
-                    default:
-                        theme = new LightTheme();
-                        break;
-                }
+                var themeDictionary = AppTheme.GetResourceDictionaryForTheme(themeToLoad);
 
                 Name = themeToLoad.ToString();
-                var primaryColorType = (Color)theme["PrimaryColor"];
+
+                // For now, our only use case for this struct requires the colors as SolidColorBrushes, so we must convert below.
+                var primaryColorType = (Color)themeDictionary["PrimaryColor"];
                 PrimaryColor = new SolidColorBrush(primaryColorType);
-                var secondaryColorType = (Color)theme["SecondaryColor"];
+                var secondaryColorType = (Color)themeDictionary["SecondaryColor"];
                 SecondaryColor = new SolidColorBrush(secondaryColorType);
             }
         }

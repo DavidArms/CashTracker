@@ -40,32 +40,39 @@ namespace CashTracker.Styles
         public static void Set(Theme selectedTheme)
         {
             var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            mergedDictionaries.Clear();
 
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
+            var theme = GetResourceDictionaryForTheme(selectedTheme);
 
-                switch (selectedTheme)
-                {
-                    case Theme.Light:
-                        mergedDictionaries.Add(new LightTheme());
-                        break;
-                    case Theme.Dark:
-                        mergedDictionaries.Add(new DarkTheme());
-                        break;
-                    case Theme.Trippy:
-                        mergedDictionaries.Add(new TrippyTheme());
-                        break;
-                    case Theme.Bumblebee:
-                        mergedDictionaries.Add(new BumblebeeTheme());
-                        break;
-                    default:
-                        mergedDictionaries.Add(new LightTheme());
-                        break;
-                }
-            }
-
+            mergedDictionaries.Add(theme);
             Preferences.Set(THEME_KEY, selectedTheme.ToString());
+
+            // Attempt to set the device's StatusBar color the app's primary color
+            var primaryColor = (Color)theme["PrimaryColor"];
+            var statusbar = DependencyService.Get<IStatusBarStyleManager>();
+            statusbar.SetColor(primaryColor);
+        }
+
+        /// <summary>
+        /// Returns the Resource Dictionary corresponding with the passed in theme
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
+        public static ResourceDictionary GetResourceDictionaryForTheme(Theme theme)
+        {
+            switch (theme)
+            {
+                case Theme.Light:
+                    return new LightTheme();
+                case Theme.Dark:
+                    return new DarkTheme();
+                case Theme.Trippy:
+                    return new TrippyTheme();
+                case Theme.Bumblebee:
+                    return new BumblebeeTheme();
+                default:
+                    return new LightTheme();
+            }
         }
     }
 }
