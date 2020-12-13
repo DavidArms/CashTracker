@@ -71,9 +71,9 @@ namespace CashTracker.ViewModels
                 Name = themeToLoad.ToString();
 
                 // For now, our only use case for this struct requires the colors as SolidColorBrushes, so we must convert below.
-                var primaryColorType = (Color)themeDictionary["PrimaryColor"];
+                var primaryColorType = (Color)themeDictionary[AppTheme.PRIMARY_COLOR_KEY];
                 PrimaryColor = new SolidColorBrush(primaryColorType);
-                var secondaryColorType = (Color)themeDictionary["SecondaryColor"];
+                var secondaryColorType = (Color)themeDictionary[AppTheme.SECONDARY_COLOR_KEY];
                 SecondaryColor = new SolidColorBrush(secondaryColorType);
             }
         }

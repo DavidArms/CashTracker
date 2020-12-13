@@ -22,6 +22,8 @@ namespace CashTracker.Styles
     {
         private const string THEME_KEY = "SelectedTheme";
         private const string DEFAULT_THEME = "Light";
+        public const string PRIMARY_COLOR_KEY = "PrimaryColor";
+        public const string SECONDARY_COLOR_KEY = "SecondaryColor";
 
         /// <summary>
         /// Sets the default application theme
@@ -48,7 +50,7 @@ namespace CashTracker.Styles
             Preferences.Set(THEME_KEY, selectedTheme.ToString());
 
             // Attempt to set the device's StatusBar color the app's primary color
-            var primaryColor = (Color)theme["PrimaryColor"];
+            var primaryColor = (Color)theme[PRIMARY_COLOR_KEY];
             var statusbar = DependencyService.Get<IStatusBarStyleManager>();
             statusbar.SetColor(primaryColor);
         }
