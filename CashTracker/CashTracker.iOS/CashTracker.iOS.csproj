@@ -63,6 +63,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\iOSFancyEntryRenderer.cs" />
     <Compile Include="CustomRenderers\StatusBarManager.cs" />
     <Compile Include="Database\SQLiteDb.cs" />
     <Compile Include="Main.cs" />

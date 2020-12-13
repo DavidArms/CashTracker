@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CashTracker.Controls"
              x:Class="CashTracker.App">
     <Application.Resources>
         <!--Global Color Theming-->
@@ -14,6 +15,17 @@
         <Style TargetType="Entry">
             <Setter Property="PlaceholderColor" Value="{DynamicResource SecondaryTextColor}"/>
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+
+        <!--For some reason, using applyToDerivedTypes on the Entry above, doesn't pass styles onto FancyEntry-->
+        <Style TargetType="controls:FancyEntry">
+            <Setter Property="BorderColor" Value="{DynamicResource SecondaryColor}"/>
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
+            <Setter Property="PlaceholderColor" Value="{DynamicResource SecondaryTextColor}"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
         </Style>
 
         <Style TargetType="DatePicker">
