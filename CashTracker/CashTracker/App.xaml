@@ -11,7 +11,7 @@
             <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}"/>
         </Style>
 
-        <Style TargetType="Entry">
+        <Style TargetType="Entry" ApplyToDerivedTypes="True">
             <Setter Property="PlaceholderColor" Value="{DynamicResource SecondaryTextColor}"/>
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
