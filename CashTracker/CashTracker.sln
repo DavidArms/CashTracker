@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashTracker.Android", "Cash
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashTracker.iOS", "CashTracker.iOS\CashTracker.iOS.csproj", "{79E8C6E4-1B37-4746-8AD9-C8E54546917A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashTracker", "CashTracker\CashTracker.csproj", "{63057A80-F620-4389-B393-2470A71B7E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashTracker", "CashTracker\CashTracker.csproj", "{63057A80-F620-4389-B393-2470A71B7E1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{577FAA2D-B2E8-43EF-A174-64F91CA7B1C4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
