@@ -1,46 +1,50 @@
 ﻿using Android.Content;
 using Android.Graphics.Drawables;
+using Android.Runtime;
+using Android.Widget;
 using CashTracker.Controls;
 using CashTracker.Droid.CustomRenderers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(FancyEntry), typeof(FancyEntryRenderer))]
+[assembly: ExportRenderer(typeof(FancyEntry), typeof(DroidFancyEntryRenderer))]
 namespace CashTracker.Droid.CustomRenderers
 {
     /// <summary>
     /// Custom entry renderer for Android
     /// </summary>
     /// <remarks>Code from https://somostechies.com/custom-entry/ </remarks>
-    public class FancyEntryRenderer : EntryRenderer
+    public class DroidFancyEntryRenderer : EntryRenderer
     {
-        public FancyEntryRenderer(Context context) : base(context)
-        { }
-
-        public FancyEntry ElementV2 => Element as FancyEntry;
-
-        protected override FormsEditText CreateNativeControl()
-        {
-            var control = base.CreateNativeControl();
-            UpdateBackground(control);
-            return control;
-        }
-
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var overrideProperties = new List<string>
+        List<string> OverrideProperties = new List<string>
             {
                 FancyEntry.CornerRadiusProperty.PropertyName,
                 FancyEntry.BorderThicknessProperty.PropertyName,
                 FancyEntry.BorderColorProperty.PropertyName
             };
 
-            if (overrideProperties.Contains(e.PropertyName))
-                UpdateBackground();
+        public DroidFancyEntryRenderer(Context context) : base(context)
+        { }
 
+        public FancyEntry ElementV2 => Element as FancyEntry;
+        private FormsEditText EditTextControl { get; set; }
+
+        protected override FormsEditText CreateNativeControl()
+        {
+            EditTextControl = base.CreateNativeControl();
+            UpdateBackground(EditTextControl);
+            return EditTextControl;
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
             base.OnElementPropertyChanged(sender, e);
+
+            if (OverrideProperties.Contains(e.PropertyName) && EditTextControl != null)
+                UpdateBackground(EditTextControl);
         }
 
         protected void UpdateBackground(FormsEditText control)
@@ -60,6 +64,21 @@ namespace CashTracker.Droid.CustomRenderers
             var padRight = (int)Context.ToPixels(ElementV2.Padding.Right);
 
             control.SetPadding(padLeft, padTop, padRight, padBottom);
+        }
+
+        /// <summary>
+        /// Overriding so that we can set the cursor color
+        /// </summary>
+        /// <remarks>see reference here: https://forums.xamarin.com/discussion/138361/change-cursor-color-in-entry </remarks>
+        /// <param name="e"></param>
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        {
+            base.OnElementChanged(e);
+
+            IntPtr IntPtrtextViewClass = JNIEnv.FindClass(typeof(TextView));
+            IntPtr mCursorDrawableResProperty = JNIEnv.GetFieldID(IntPtrtextViewClass, "mCursorDrawableRes", "I");
+
+            JNIEnv.SetField(Control.Handle, mCursorDrawableResProperty, Resource.Drawable.custom_cursor);
         }
     }
 }

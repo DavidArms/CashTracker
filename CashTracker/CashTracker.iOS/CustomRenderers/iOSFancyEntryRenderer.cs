@@ -2,39 +2,49 @@
 using CashTracker.iOS.CustomRenderers;
 using CoreGraphics;
 using Foundation;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(FancyEntry), typeof(FancyEntryRenderer))]
+[assembly: ExportRenderer(typeof(FancyEntry), typeof(iOSFancyEntryRenderer))]
 namespace CashTracker.iOS.CustomRenderers
 {
     /// <summary>
     /// Custom entry renderer for iOS
     /// </summary>
     /// <remarks>Code from https://somostechies.com/custom-entry/ </remarks>
-    public sealed class FancyEntryRenderer : EntryRendererBase<UITextFieldPadding>
+    public sealed class iOSFancyEntryRenderer : EntryRendererBase<UITextFieldPadding>
     {
         public FancyEntry ElementV2 => Element as FancyEntry;
+        private UITextFieldPadding EditTextControl { get; set; }
 
-        public FancyEntryRenderer()
+        List<string> OverrideProperties = new List<string>
+            {
+                FancyEntry.CornerRadiusProperty.PropertyName,
+                FancyEntry.BorderThicknessProperty.PropertyName,
+                FancyEntry.BorderColorProperty.PropertyName
+            };
+
+        public iOSFancyEntryRenderer()
         {
             Frame = new RectangleF(0, 20, 320, 40);
         }
 
         protected override UITextFieldPadding CreateNativeControl()
         {
-            var control = new UITextFieldPadding(RectangleF.Empty)
+            EditTextControl = new UITextFieldPadding(RectangleF.Empty)
             {
                 Padding = ElementV2.Padding,
                 BorderStyle = UITextBorderStyle.RoundedRect,
                 ClipsToBounds = true
             };
 
-            UpdateBackground(control);
+            UpdateBackground(EditTextControl);
 
-            return control;
+            return EditTextControl;
         }
 
         void UpdateBackground(UITextField control)
@@ -45,7 +55,15 @@ namespace CashTracker.iOS.CustomRenderers
             control.Layer.CornerRadius = ElementV2.CornerRadius;
             control.Layer.BorderWidth = ElementV2.BorderThickness;
             control.Layer.BorderColor = ElementV2.BorderColor.ToCGColor();
-    }
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            if (OverrideProperties.Contains(e.PropertyName) && EditTextControl != null)
+                UpdateBackground(EditTextControl);
+        }
     }
 
     public class UITextFieldPadding : UITextField

@@ -81,7 +81,7 @@
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.5" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomRenderers\FancyEntryRenderer.cs" />
+    <Compile Include="CustomRenderers\DroidFancyEntryRenderer.cs" />
     <Compile Include="CustomRenderers\StatusBarManager.cs" />
     <Compile Include="Database\SQLiteDb.cs" />
     <Compile Include="MainActivity.cs" />
@@ -122,6 +122,9 @@
       <Project>{F252FA07-6006-4FA5-ABEF-4633324B3752}</Project>
       <Name>CashTracker</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\custom_cursor.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
