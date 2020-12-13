@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:CashTracker.ViewModels"
+             xmlns:vm="clr-namespace:CashTracker.ViewModels" xmlns:controls="clr-namespace:CashTracker.Controls"
              x:Class="CashTracker.Views.AddJobPage"
              Shell.PresentationMode="ModalAnimated">
     <ContentPage.BindingContext>
@@ -11,9 +11,9 @@
         <StackLayout>
             <Label Text="Add a New Job" HorizontalTextAlignment="Center" Margin="0, 0, 0, 20"/>
             <Label Text="Job Name/Title" HorizontalTextAlignment="Center"/>
-            <Entry Text="{Binding JobName}" HorizontalOptions="Center" WidthRequest="200" Margin="0, 0, 0, 20"/>
+            <controls:FancyEntry Text="{Binding JobName}" HorizontalOptions="Center" WidthRequest="200" Margin="0, 0, 0, 20"/>
             <Label Text="Who's Paying You?" HorizontalTextAlignment="Center"/>
-            <Entry Text="{Binding EmployerName}" HorizontalOptions="Center" WidthRequest="200" Margin="0, 0, 0, 20"/>
+            <controls:FancyEntry Text="{Binding EmployerName}" HorizontalOptions="Center" WidthRequest="200" Margin="0, 0, 0, 20"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button Text="Cancel" Command="{Binding CancelCommand}"/>
                 <Button Text="Create Job" Command="{Binding AddJobCommand}"/>

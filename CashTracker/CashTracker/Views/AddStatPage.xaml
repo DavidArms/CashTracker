@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vms="clr-namespace:CashTracker.ViewModels"
-             xmlns:converters="clr-namespace:CashTracker.Utilities.Converters"
+             xmlns:converters="clr-namespace:CashTracker.Utilities.Converters" 
+             xmlns:controls="clr-namespace:CashTracker.Controls"
              x:Class="CashTracker.Views.AddStatPage"
              Title="Add Stat">
 
@@ -38,18 +39,20 @@
                                IsVisible="{Binding IsNotBusy}"/>
                     </StackLayout>
                 </Frame>
-                <Entry Placeholder="$0.00" 
-                       Text="{Binding TotalMoney, Converter={StaticResource NullableDoubleConverter}}" 
-                       Keyboard="Numeric"
-                       HorizontalTextAlignment="Center"
-                       HorizontalOptions="Center"/>
+
+                <controls:FancyEntry Placeholder="$0.00" 
+                                     Text="{Binding TotalMoney, Converter={StaticResource NullableDoubleConverter}}"
+                                     Keyboard="Numeric"
+                                     HorizontalOptions="Center"
+                                     WidthRequest="120"/>
                 <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Entry Placeholder="0 hours" 
-                       Text="{Binding TotalHours, Converter={StaticResource NullableDoubleConverter}}"
-                       Keyboard="Numeric"
-                       HorizontalTextAlignment="Center"/>
+                <controls:FancyEntry Placeholder="0 Hours" 
+                                     Text="{Binding TotalHours, Converter={StaticResource NullableDoubleConverter}}"
+                                     Keyboard="Numeric"
+                                     HorizontalOptions="Center"
+                                     WidthRequest="120"/> 
                 <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <DatePicker Date="{Binding DateWorked}" WidthRequest="100" HorizontalOptions="Center"/>
+                <DatePicker Date="{Binding DateWorked}" WidthRequest="120" HorizontalOptions="Center"/>
                 <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Button Text="Save" Command="{Binding SaveStat}"/>
             </StackLayout>
