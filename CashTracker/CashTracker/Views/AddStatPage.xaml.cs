@@ -31,10 +31,11 @@ namespace CashTracker.Views
             {
                 var stack = new StackLayout();
 
-                var nameLabel = new Label { FontAttributes = FontAttributes.Bold };
-                var employerLabel = new Label();
+                var nameLabel = new Label { FontAttributes = FontAttributes.Bold, HorizontalOptions = LayoutOptions.Center };
+                var employerLabel = new Label { HorizontalOptions = LayoutOptions.Center };
 
                 nameLabel.SetBinding(Label.TextProperty, "Name");
+                nameLabel.SetDynamicResource(Label.TextColorProperty, "ButtonTextColor");
                 employerLabel.SetBinding(Label.TextProperty, "Employer");
 
                 stack.Children.Add(nameLabel);
@@ -51,6 +52,7 @@ namespace CashTracker.Views
                 HeightRequest = 100
             };
             _jobsListView.ItemSelected += (async (object sender, SelectedItemChangedEventArgs args) => await JobSelectedAsync(args));
+            _jobsListView.SetDynamicResource(VisualElement.BackgroundColorProperty, "SecondaryColor");
 
             _jobsPopup = new BubblePopup(JobName)
             {
@@ -59,6 +61,7 @@ namespace CashTracker.Views
                 WidthRequest = 200,
                 IsAnimationEnabled = true,
                 PointerDirection = Forms9Patch.PointerDirection.Up,
+                Padding = 2
             };
 
             _jobsPopup.Popped += CancelChangeJob;
