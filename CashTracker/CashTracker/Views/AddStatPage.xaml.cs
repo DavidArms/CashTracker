@@ -29,9 +29,9 @@ namespace CashTracker.Views
         {
             var jobTemplate = new DataTemplate(() =>
             {
-                var stack = new StackLayout();
+                var stack = new StackLayout { Margin = 2 };
 
-                var nameLabel = new Label { FontAttributes = FontAttributes.Bold, HorizontalOptions = LayoutOptions.Center };
+                var nameLabel = new Label { FontAttributes = FontAttributes.Bold, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
                 var employerLabel = new Label { HorizontalOptions = LayoutOptions.Center };
 
                 nameLabel.SetBinding(Label.TextProperty, "Name");
@@ -40,6 +40,7 @@ namespace CashTracker.Views
 
                 stack.Children.Add(nameLabel);
                 stack.Children.Add(employerLabel);
+                stack.SetDynamicResource(VisualElement.BackgroundColorProperty, "SecondaryColor");
 
                 return new ViewCell { View = stack };
             });
@@ -47,12 +48,13 @@ namespace CashTracker.Views
             {
                 ItemsSource = _viewModel.AllJobs,
                 ItemTemplate = jobTemplate,
+                HasUnevenRows = true,
                 // These size requests are required to squeeze this content inside of the bubble popup. Otherwise the popup's pointer may break
                 WidthRequest = 50,
-                HeightRequest = 100
+                HeightRequest = 100,
+                SeparatorVisibility = SeparatorVisibility.Default
             };
             _jobsListView.ItemSelected += (async (object sender, SelectedItemChangedEventArgs args) => await JobSelectedAsync(args));
-            _jobsListView.SetDynamicResource(VisualElement.BackgroundColorProperty, "SecondaryColor");
 
             _jobsPopup = new BubblePopup(JobName)
             {
