@@ -32,8 +32,6 @@ namespace CashTracker.Controls
         }
         #endregion
 
-
-
         #region Padding
         public static readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(FancyEntry), new Thickness(5));
@@ -61,8 +59,6 @@ namespace CashTracker.Controls
             set => SetValue(BorderColorProperty, value);
         }
         #endregion
-
-
 
     }
 }
