@@ -1,6 +1,7 @@
 using CashTracker.Database;
 using CashTracker.Models;
 using MvvmHelpers;
+using MvvmHelpers.Commands;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -68,7 +69,7 @@ namespace CashTracker.ViewModels
         public double? TotalHours
         {
             get => _totalHours;
-            set => SetProperty(ref _totalHours, value, onChanged: RefreshCanExecutes);
+            set => SetProperty(ref _totalHours, value);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace CashTracker.ViewModels
         public double? TotalMoney
         {
             get => _totalMoney;
-            set => SetProperty(ref _totalMoney, value, onChanged: RefreshCanExecutes);
+            set => SetProperty(ref _totalMoney, value);
         }
 
         /// <summary>
@@ -93,25 +94,33 @@ namespace CashTracker.ViewModels
             TotalHours = null;
             TotalMoney = null;
             DateWorked = DateTime.Today;
-            SaveStat = new Command(SaveNewStat, canExecute: () => IsNotBusy && ValidateInputs());
+            SaveStat = new AsyncCommand(SaveNewStatAsync, (_) => IsNotBusy && ValidateInputs());
+            DeleteCommand = new AsyncCommand(DeleteJobAsync);
 
             Task.Run(async () => AllJobs.AddRange(await _jobRepo.GetAllAsync()));
         }
 
-        public void RefreshCanExecutes()
+        public ICommand DeleteCommand { get; }
+        private async Task DeleteJobAsync()
         {
-            (SaveStat as Command).ChangeCanExecute();
+            AllJobs.Remove(ActiveJob);
+            await _jobRepo.RemoveAsync(ActiveJob);
+            var nextJobToSelect = await _jobRepo.FirstOrDefaultAsync();
+            if (nextJobToSelect == null)
+            {
+                ActiveJob = new Job();
+                await Shell.Current.GoToAsync("AddJobPage");
+            }
+            else
+                ActiveJob = nextJobToSelect;
         }
 
         public ICommand SaveStat { get; }
         /// <summary>
         /// Saves a new statistic based on the inputs currently on screen
         /// </summary>
-        public void SaveNewStat()
+        private async Task SaveNewStatAsync()
         {
-            if (!ValidateInputs())
-                return;
-
             var newStat = new IncomeStat
             {
                 Job_ID = ActiveJob.ID,
@@ -132,10 +141,6 @@ namespace CashTracker.ViewModels
             //}
         }
 
-        private bool ValidateInputs()
-        {
-            //TODO: Might want to build an error message for displaying instead
-            return TotalHours > 0 && TotalMoney.HasValue;
-        }
+        private bool ValidateInputs() => TotalHours > 0 && TotalMoney.HasValue;
     }
 }

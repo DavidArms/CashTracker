@@ -72,14 +72,14 @@ namespace CashTracker.Views
         private async void ChooseJobButton_Clicked(object sender, System.EventArgs e)
         {
             _viewModel.IsBusy = true;
-            _viewModel.RefreshCanExecutes();
+            //_viewModel.RefreshCanExecutes();
             await _jobsPopup.PushAsync();
         }
 
         private void CancelChangeJob(object sender, Forms9Patch.PopupPoppedEventArgs e)
         {
             _viewModel.IsBusy = false;
-            _viewModel.RefreshCanExecutes();
+            //_viewModel.RefreshCanExecutes();
             //TODO: Could the viewmodel subscribe to the OnPropertyChanged event and just refreshCanExecutes no matter what property changes?
         }
 

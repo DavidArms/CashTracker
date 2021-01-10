@@ -23,10 +23,11 @@
                 <SwipeView>
                     <SwipeView.LeftItems>
                         <SwipeItems>
-                            <SwipeItem Text="Favorite"
-                       BackgroundColor="LightGreen"/>
+                            <SwipeItem Text="Edit"
+                                       BackgroundColor="{DynamicResource SecondaryColor}"/>
                             <SwipeItem Text="Delete"
-                       BackgroundColor="LightPink"/>
+                                       BackgroundColor="Red"
+                                       Command="{Binding DeleteCommand}"/>
                         </SwipeItems>
                     </SwipeView.LeftItems>
                     <Frame>
