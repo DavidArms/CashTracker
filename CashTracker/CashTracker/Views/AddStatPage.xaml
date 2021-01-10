@@ -20,25 +20,36 @@
     <ContentPage.Content>
         <StackLayout Padding="10">
             <StackLayout HorizontalOptions="FillAndExpand">
-                <Frame>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ChooseJobButton_Clicked"/>
-                    </Frame.GestureRecognizers>
-                    <StackLayout>
-                        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="62"/>
-                        <Label x:Name="JobName"
+                <SwipeView>
+                    <SwipeView.LeftItems>
+                        <SwipeItems>
+                            <SwipeItem Text="Favorite"
+                       BackgroundColor="LightGreen"/>
+                            <SwipeItem Text="Delete"
+                       BackgroundColor="LightPink"/>
+                        </SwipeItems>
+                    </SwipeView.LeftItems>
+                    <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ChooseJobButton_Clicked"/>
+                        </Frame.GestureRecognizers>
+
+                        <StackLayout>
+                            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="62"/>
+                            <Label x:Name="JobName"
                                Text="{Binding ActiveJob.Name}"
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="30"
                                IsVisible="{Binding IsNotBusy}"/>
-                        <Label Text="{Binding ActiveJob.Employer}" 
+                            <Label Text="{Binding ActiveJob.Employer}" 
                                HorizontalTextAlignment="Center" 
                                FontAttributes="Bold"
                                FontSize="12"
                                IsVisible="{Binding IsNotBusy}"/>
-                    </StackLayout>
-                </Frame>
+                        </StackLayout>
+                    </Frame>
+                </SwipeView>
 
                 <controls:FancyEntry Placeholder="$0.00" 
                                      Text="{Binding TotalMoney, Converter={StaticResource NullableDoubleConverter}}"

@@ -12,7 +12,7 @@ namespace CashTracker
 
         public App()
         {
-            Device.SetFlags(new string[] { "Shapes_Experimental", "SwipeView_Experimental" });
+            //Device.SetFlags(new string[] { "Shapes_Experimental", "SwipeView_Experimental" });
 
             InitializeComponent();
             DependencyService.Register<IStatusBarStyleManager>();
