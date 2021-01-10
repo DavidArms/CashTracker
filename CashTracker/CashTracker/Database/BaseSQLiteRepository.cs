@@ -1,4 +1,4 @@
-﻿using CashTracker.Models;
+using CashTracker.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -29,38 +29,38 @@ namespace CashTracker.Database
         }
 
         /// <inheritdoc/>
-        public async Task<T> GetByIdAsync(int id) => await Connection.Table<T>().FirstOrDefaultAsync(entity => entity.ID == id);
+        public async Task<T> GetByIdAsync(int id) => await Connection.Table<T>().FirstOrDefaultAsync(entity => entity.ID == id).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
-            => Connection.Table<T>().FirstOrDefaultAsync(predicate);
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+            => await Connection.Table<T>().FirstOrDefaultAsync(predicate).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the first <typeparamref name="T"/> if one exists
         /// </summary>
         /// <returns></returns>
-        public async Task<T> FirstOrDefaultAsync() => await Connection.Table<T>().FirstOrDefaultAsync();
+        public async Task<T> FirstOrDefaultAsync() => await Connection.Table<T>().FirstOrDefaultAsync().ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task AddAsync(T entity) => await Connection.InsertAsync(entity);
+        public async Task AddAsync(T entity) => await Connection.InsertAsync(entity).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(T entity) => await Connection.UpdateAsync(entity);
+        public async Task UpdateAsync(T entity) => await Connection.UpdateAsync(entity).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task RemoveAsync(T entity) => await Connection.DeleteAsync(entity);
+        public async Task RemoveAsync(T entity) => await Connection.DeleteAsync(entity).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<T>> GetAllAsync() => await Connection.Table<T>().ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync() => await Connection.Table<T>().ToListAsync().ConfigureAwait(false);
 
         /// <inheritdoc/>
         public async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate) =>
-            await Connection.Table<T>().Where(predicate).ToListAsync();
+            await Connection.Table<T>().Where(predicate).ToListAsync().ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task<int> CountAll() => await Connection.Table<T>().CountAsync();
+        public async Task<int> CountAll() => await Connection.Table<T>().CountAsync().ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task<int> CountWhere(Expression<Func<T, bool>> predicate) => await Connection.Table<T>().CountAsync(predicate);
+        public async Task<int> CountWhere(Expression<Func<T, bool>> predicate) => await Connection.Table<T>().CountAsync(predicate).ConfigureAwait(false);
     }
 }
