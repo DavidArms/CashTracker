@@ -3,6 +3,8 @@ using CashTracker.Models;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -18,11 +20,11 @@ namespace CashTracker.ViewModels
         private double? _totalHours;
         private double? _totalMoney;
 
-        private ObservableRangeCollection<Job> _allJobs = new ObservableRangeCollection<Job>();
-        public ObservableRangeCollection<Job> AllJobs
+        private NotifyTaskCompletion<List<Job>> _allJobs;
+        public NotifyTaskCompletion<List<Job>> AllJobs
         {
             get => _allJobs;
-            set => SetProperty(ref _allJobs, value); //TODO: Use the OnChanged action to handle the case where there are no jobs
+            set => SetProperty(ref _allJobs, value);
         }
 
         private Job _activeJob;
@@ -33,7 +35,6 @@ namespace CashTracker.ViewModels
         {
             get
             {
-                //TODO: Update language version to get null coalescing assignment operator
                 if (_activeJob == null)
                     ActiveJob = Task.Run(async () => await _jobRepo.FirstOrDefaultAsync()).Result;
 
@@ -42,7 +43,9 @@ namespace CashTracker.ViewModels
             set
             {
                 SetProperty(ref _activeJob, value);
-                OnPropertyChanged(nameof(AllJobs));
+                // Refresh the jobs list if is currently loading or if it doesn't include our new value
+                if (!AllJobs.IsSuccessfullyCompleted || !AllJobs.Result.Any(job => job.ID == value.ID))
+                    AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
             }
         }
 
@@ -97,22 +100,19 @@ namespace CashTracker.ViewModels
             SaveStat = new AsyncCommand(SaveNewStatAsync, (_) => IsNotBusy && ValidateInputs());
             DeleteCommand = new AsyncCommand(DeleteJobAsync);
 
-            Task.Run(async () => AllJobs.AddRange(await _jobRepo.GetAllAsync()));
+            AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
         }
 
         public ICommand DeleteCommand { get; }
         private async Task DeleteJobAsync()
         {
-            AllJobs.Remove(ActiveJob);
             await _jobRepo.RemoveAsync(ActiveJob);
             var nextJobToSelect = await _jobRepo.FirstOrDefaultAsync();
-            if (nextJobToSelect == null)
-            {
-                ActiveJob = new Job();
-                await Shell.Current.GoToAsync("AddJobPage");
-            }
-            else
+            if (nextJobToSelect != null)
                 ActiveJob = nextJobToSelect;
+
+            // refresh AllJobs. LoadAllJobsAsync will handle the case where we've removed all jobs from the DB
+            AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
         }
 
         public ICommand SaveStat { get; }
@@ -139,6 +139,16 @@ namespace CashTracker.ViewModels
             //    // TODO Log and inform user of error
             //    return false;
             //}
+        }
+
+        public async Task<List<Job>> LoadAllJobsAsync()
+        {
+            var jobs = await _jobRepo.GetAllAsync();
+            var asList = jobs.ToList();
+            if (asList.Count() == 0)
+                await Shell.Current.GoToAsync("AddJobPage");
+
+            return asList;
         }
 
         private bool ValidateInputs() => TotalHours > 0 && TotalMoney.HasValue;

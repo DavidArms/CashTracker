@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
 using Foundation;
 using UIKit;
 
@@ -24,7 +21,6 @@ namespace CashTracker.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-            Forms9Patch.iOS.Settings.Initialize(this);
             return base.FinishedLaunching(app, options);
         }
     }
