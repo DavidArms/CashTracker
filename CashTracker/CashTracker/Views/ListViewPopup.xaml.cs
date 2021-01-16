@@ -1,13 +1,12 @@
-using Rg.Plugins.Popup.Services;
-using Xamarin.Forms;
+﻿using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms.Xaml;
 
 namespace CashTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddStatPage : ContentPage
+    public partial class ListViewPopup : PopupPage
     {
-        public AddStatPage()
+        public ListViewPopup()
         {
             InitializeComponent();
         }

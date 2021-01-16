@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vms="clr-namespace:CashTracker.ViewModels"
              xmlns:converters="clr-namespace:CashTracker.Utilities.Converters" 
-             xmlns:controls="clr-namespace:CashTracker.Controls"
+             xmlns:controls="clr-namespace:CashTracker.Controls" xmlns:views="clr-namespace:CashTracker.Views"
              x:Class="CashTracker.Views.AddStatPage"
              Title="Add Stat">
 
@@ -31,13 +31,14 @@
                         </SwipeItems>
                     </SwipeView.LeftItems>
                     <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenPopupCommand}"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout>
                             <ActivityIndicator IsVisible="{Binding AllJobs.IsNotCompleted}" 
                                                IsRunning="{Binding AllJobs.IsNotCompleted}" 
                                                HeightRequest="62"/>
-                            <Picker x:Name="JobName"
-                                    ItemsSource="{Binding AllJobs.Result}"
-                                    ItemDisplayBinding="{Binding Name}"
+                            <Label Text="{Binding ActiveJob.Name}"
                                     HorizontalTextAlignment="Center" 
                                     FontAttributes="Bold"
                                     FontSize="30"

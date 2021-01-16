@@ -1,7 +1,9 @@
 using CashTracker.Database;
 using CashTracker.Models;
+using CashTracker.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,8 +101,15 @@ namespace CashTracker.ViewModels
             DateWorked = DateTime.Today;
             SaveStat = new AsyncCommand(SaveNewStatAsync, (_) => IsNotBusy && ValidateInputs());
             DeleteCommand = new AsyncCommand(DeleteJobAsync);
+            OpenPopupCommand = new AsyncCommand(ShowPopupAsync);
 
             AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
+        }
+
+        public ICommand OpenPopupCommand { get; }
+        private async Task ShowPopupAsync()
+        {
+            await PopupNavigation.Instance.PushAsync(new ListViewPopup());
         }
 
         public ICommand DeleteCommand { get; }
