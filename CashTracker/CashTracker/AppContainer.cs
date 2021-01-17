@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using CashTracker.Database;
 using CashTracker.Models;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Services;
 using System;
 
 namespace CashTracker
@@ -18,6 +20,7 @@ namespace CashTracker
             var builder = new ContainerBuilder();
             builder.RegisterType<JobRepository>().As<IAsyncRepository<Job>>();
             builder.RegisterType<IncomeStatRepository>().As<IAsyncRepository<IncomeStat>>();
+            builder.RegisterInstance(PopupNavigation.Instance).As<IPopupNavigation>().SingleInstance();
 
             // view models // TODO: Look into whether or not it's worth refactoring to set up view models here
             //builder.RegisterType<MainViewModel>().SingleInstance();

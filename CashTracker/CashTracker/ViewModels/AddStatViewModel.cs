@@ -3,6 +3,7 @@ using CashTracker.Models;
 using CashTracker.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
+using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace CashTracker.ViewModels
     {
         private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
         private IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
+        private IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
 
         private double? _totalHours;
         private double? _totalMoney;
@@ -109,7 +111,7 @@ namespace CashTracker.ViewModels
         public ICommand OpenPopupCommand { get; }
         private async Task ShowPopupAsync()
         {
-            await PopupNavigation.Instance.PushAsync(new JobsPopup(AllJobs.Result));
+            await _popupNavigation.PushAsync(new JobsPopup(AllJobs.Result));
         }
 
         public ICommand DeleteCommand { get; }
