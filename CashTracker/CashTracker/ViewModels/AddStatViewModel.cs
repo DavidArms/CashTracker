@@ -109,7 +109,7 @@ namespace CashTracker.ViewModels
         public ICommand OpenPopupCommand { get; }
         private async Task ShowPopupAsync()
         {
-            await PopupNavigation.Instance.PushAsync(new ListViewPopup());
+            await PopupNavigation.Instance.PushAsync(new JobsPopup(AllJobs.Result));
         }
 
         public ICommand DeleteCommand { get; }

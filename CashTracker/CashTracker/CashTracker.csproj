@@ -24,6 +24,9 @@
     <Compile Update="Styles\TrippyTheme.xaml.cs">
       <DependentUpon>TrippyTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\JobsPopup.xaml.cs">
+      <DependentUpon>JobsPopup.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +48,7 @@
     <EmbeddedResource Update="Views\AddStatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ListViewPopup.xaml">
+    <EmbeddedResource Update="Views\JobsPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ThemeSelectionPage.xaml">
