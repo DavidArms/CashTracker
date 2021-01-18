@@ -106,12 +106,29 @@ namespace CashTracker.ViewModels
             OpenPopupCommand = new AsyncCommand(ShowPopupAsync);
 
             AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
+            _popupNavigation.Popping += _popupNavigation_Popping;
+        }
+
+        ~AddStatViewModel()
+        {
+            _popupNavigation.Popping -= _popupNavigation_Popping;
+        }
+
+        private void _popupNavigation_Popping(object sender, Rg.Plugins.Popup.Events.PopupNavigationEventArgs e)
+        {
+            if (!(e.Page is JobsPopup jobsPopup) || jobsPopup.SelectedJob == null)
+                return;
+
+            ActiveJob = jobsPopup.SelectedJob;
         }
 
         public ICommand OpenPopupCommand { get; }
         private async Task ShowPopupAsync()
         {
-            await _popupNavigation.PushAsync(new JobsPopup(AllJobs.Result));
+            if (!AllJobs.IsSuccessfullyCompleted)
+                return;
+
+            await _popupNavigation.PushAsync(new JobsPopup(AllJobs.Result, ActiveJob));
         }
 
         public ICommand DeleteCommand { get; }

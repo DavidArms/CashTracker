@@ -27,7 +27,11 @@
                 <Label Text="Select a Job"
                        HorizontalOptions="Center"
                        FontSize="28"/>
-                <CollectionView ItemsSource="{Binding Jobs}">
+                <CollectionView x:Name="JobCollection"
+                                ItemsSource="{Binding Jobs}"
+                                SelectionMode="Single"
+                                SelectionChanged="JobCollection_SelectionChanged"
+                                SelectedItem="{Binding SelectedJob}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*, *" 
