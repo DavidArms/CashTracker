@@ -23,11 +23,16 @@
                 <SwipeView>
                     <SwipeView.LeftItems>
                         <SwipeItems>
-                            <SwipeItem Text="Edit"
-                                       BackgroundColor="{DynamicResource SecondaryColor}"/>
-                            <SwipeItem Text="Delete"
-                                       BackgroundColor="Red"
-                                       Command="{Binding DeleteCommand}"/>
+                            <SwipeItemView Command="{Binding DeleteCommand}">
+                                <Frame BackgroundColor="{DynamicResource DeleteButtonColor}" WidthRequest="50">
+                                    <Label Text="Delete" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                                </Frame>
+                            </SwipeItemView>
+                            <SwipeItemView>
+                                <Frame BackgroundColor="{DynamicResource SecondaryColor}" WidthRequest="50">
+                                    <Label Text="Edit" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                                </Frame>
+                            </SwipeItemView>
                         </SwipeItems>
                     </SwipeView.LeftItems>
                     <Frame>

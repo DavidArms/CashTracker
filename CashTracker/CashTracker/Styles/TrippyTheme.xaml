@@ -14,5 +14,6 @@
     <Color x:Key="TransparentColor">Transparent</Color>
     <Color x:Key="PrimaryDisabledColor">Gray</Color>
     <Color x:Key="DisabledTextColor">#404040</Color>
+    <Color x:Key="DeleteButtonColor">#C0084D</Color>
 
 </ResourceDictionary>
