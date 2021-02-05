@@ -36,34 +36,34 @@
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
 
-        <Style TargetType="Frame">
-            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
-            <Setter Property="BorderColor" Value="{DynamicResource SecondaryColor}"/>
-            <Setter Property="CornerRadius" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="HasShadow" Value="True"/>
-        </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
         </Style>
 
-        <!--Below we are targeting the grid type, but this is actually used for styling the selected cell in CollectionViews-->
-        <!--This is Microsoft's recommended approach for CollectionView styling: 
+        <!--Below we are using the VisualStateManager to set styles for different control states. i.e Normal vs. Selected-->
+        <!--This is Microsoft's recommended approach for styling CollectionView items: 
             https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/collectionview/selection#change-selected-item-color-->
-        <Style TargetType="Grid">
+        <Style TargetType="Frame">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor"
-                                        Value="{DynamicResource TransparentColor}" />
+                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
+                                <Setter Property="BorderColor" Value="{DynamicResource SecondaryColor}"/>
+                                <Setter Property="CornerRadius" Value="5"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="HasShadow" Value="True"/>
                             </VisualState.Setters>
                         </VisualState>
+                        <!--Swap colors when selected-->
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="BackgroundColor"
-                                        Value="{DynamicResource SecondaryColor}" />
+                                <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}"/>
+                                <Setter Property="BorderColor" Value="{DynamicResource SecondaryColor}"/>
+                                <Setter Property="CornerRadius" Value="5"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="HasShadow" Value="True"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>

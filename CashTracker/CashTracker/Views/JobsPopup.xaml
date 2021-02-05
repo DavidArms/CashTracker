@@ -32,26 +32,31 @@
                                 SelectionMode="Single"
                                 SelectionChanged="JobCollection_SelectionChanged"
                                 SelectedItem="{Binding SelectedJob}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid ColumnDefinitions="*, *" 
+                            <Frame BackgroundColor="Transparent">
+                                <Grid ColumnDefinitions="*, *" 
                                   RowDefinitions="Auto, Auto"
                                   Margin="0,0,0,10">
-                                <Label Grid.Column="0" Grid.Row="0"
+                                    <Label Grid.Column="0" Grid.Row="0"
                                        Text="{Binding Name}"
                                        FontSize="Large"
                                        FontAttributes="Bold"/>
-                                <Label Grid.Column="1" Grid.Row="0"
+                                    <Label Grid.Column="1" Grid.Row="0"
                                        Text="{Binding Employer}"
                                        FontSize="Large"
                                        FontAttributes="Bold" />
-                                <Label Grid.Row="1" Grid.Column="0"
+                                    <Label Grid.Row="1" Grid.Column="0"
                                        Text="Last Updated: "
                                        FontSize="Subtitle" />
-                                <Label Grid.Row="1" Grid.Column="1"
+                                    <Label Grid.Row="1" Grid.Column="1"
                                        Text="12/23/2020"
                                        FontSize="Subtitle" />
-                            </Grid>
+                                </Grid>
+                            </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
