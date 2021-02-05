@@ -14,6 +14,9 @@ namespace CashTracker.Views
         private bool _closeOnSelection = false;
 
         private List<Job> _jobs;
+        /// <summary>
+        /// The collection of jobs to show
+        /// </summary>
         public List<Job> Jobs
         {
             get => _jobs;
@@ -25,7 +28,9 @@ namespace CashTracker.Views
         }
 
         private Job _selectedJob;
-
+        /// <summary>
+        /// The currently selected job in the collection
+        /// </summary>
         public Job SelectedJob
         {
             get => _selectedJob;
@@ -40,10 +45,17 @@ namespace CashTracker.Views
         {
             InitializeComponent();
             BindingContext = this;
-            Jobs = jobs;
 
-            if (selectedJob != null && Jobs.Any(job => job.ID == selectedJob.ID))
+            if (selectedJob != null && jobs.Any(job => job.ID == selectedJob.ID))
+            {
                 SelectedJob = jobs.Single(job => job.ID == selectedJob.ID);
+
+                // Ensure the selected job is at the top of the list for convenience
+                jobs.Remove(SelectedJob);
+                jobs.Insert(0, SelectedJob);
+            }
+
+            Jobs = jobs;
 
             // Now that we've selected the default job, we can automatically close on the next job selection
             _closeOnSelection = true;

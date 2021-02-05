@@ -116,6 +116,8 @@ namespace CashTracker.ViewModels
 
         private void _popupNavigation_Popping(object sender, Rg.Plugins.Popup.Events.PopupNavigationEventArgs e)
         {
+            // Check if the popping popup is a Jobs popup, and if so, update our ActiveJob
+
             if (!(e.Page is JobsPopup jobsPopup) || jobsPopup.SelectedJob == null)
                 return;
 
