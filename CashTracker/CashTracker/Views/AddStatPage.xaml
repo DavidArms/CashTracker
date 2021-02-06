@@ -25,12 +25,20 @@
                         <SwipeItems>
                             <SwipeItemView Command="{Binding DeleteCommand}">
                                 <Frame BackgroundColor="{DynamicResource DeleteButtonColor}" WidthRequest="50">
-                                    <Label Text="Delete" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Label Text="&#xf2ed;" HorizontalOptions="Center" VerticalOptions="Center"
+                                               FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
+                                        <Label Text="Delete"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
+                                    </StackLayout>
                                 </Frame>
                             </SwipeItemView>
                             <SwipeItemView>
                                 <Frame BackgroundColor="{DynamicResource SecondaryColor}" WidthRequest="50">
-                                    <Label Text="Edit" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Label Text="&#xf044;" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"
+                                               FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
+                                        <Label Text="Edit"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
+                                    </StackLayout>
                                 </Frame>
                             </SwipeItemView>
                         </SwipeItems>
