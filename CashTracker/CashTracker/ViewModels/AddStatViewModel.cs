@@ -1,7 +1,10 @@
 using CashTracker.Database;
 using CashTracker.Models;
+using CashTracker.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,7 @@ namespace CashTracker.ViewModels
     {
         private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
         private IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
+        private IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
 
         private double? _totalHours;
         private double? _totalMoney;
@@ -99,8 +103,34 @@ namespace CashTracker.ViewModels
             DateWorked = DateTime.Today;
             SaveStat = new AsyncCommand(SaveNewStatAsync, (_) => IsNotBusy && ValidateInputs());
             DeleteCommand = new AsyncCommand(DeleteJobAsync);
+            OpenPopupCommand = new AsyncCommand(ShowPopupAsync);
 
             AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
+            _popupNavigation.Popping += _popupNavigation_Popping;
+        }
+
+        ~AddStatViewModel()
+        {
+            _popupNavigation.Popping -= _popupNavigation_Popping;
+        }
+
+        private void _popupNavigation_Popping(object sender, Rg.Plugins.Popup.Events.PopupNavigationEventArgs e)
+        {
+            // Check if the popping popup is a Jobs popup, and if so, update our ActiveJob
+
+            if (!(e.Page is JobsPopup jobsPopup) || jobsPopup.SelectedJob == null)
+                return;
+
+            ActiveJob = jobsPopup.SelectedJob;
+        }
+
+        public ICommand OpenPopupCommand { get; }
+        private async Task ShowPopupAsync()
+        {
+            if (!AllJobs.IsSuccessfullyCompleted)
+                return;
+
+            await _popupNavigation.PushAsync(new JobsPopup(AllJobs.Result, ActiveJob));
         }
 
         public ICommand DeleteCommand { get; }

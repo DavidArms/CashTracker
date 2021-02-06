@@ -14,5 +14,11 @@
     <Color x:Key="TransparentColor">Transparent</Color>
     <Color x:Key="PrimaryDisabledColor">Gray</Color>
     <Color x:Key="DisabledTextColor">#404040</Color>
+    <Color x:Key="DeleteButtonColor">#C0084D</Color>
+
+    <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular">
+        <On Platform="Android" Value="Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free Regular" />
+        <On Platform="iOS" Value="Font Awesome 5 Free" />
+    </OnPlatform>
 
 </ResourceDictionary>
