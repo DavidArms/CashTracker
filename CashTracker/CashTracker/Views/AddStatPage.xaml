@@ -18,69 +18,67 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <StackLayout HorizontalOptions="FillAndExpand">
-                <SwipeView>
-                    <SwipeView.LeftItems>
-                        <SwipeItems>
-                            <SwipeItemView Command="{Binding DeleteCommand}">
-                                <Frame BackgroundColor="{DynamicResource DeleteButtonColor}" WidthRequest="50">
-                                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                        <Label Text="&#xf2ed;" HorizontalOptions="Center" VerticalOptions="Center"
-                                               FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
-                                        <Label Text="Delete"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
-                                    </StackLayout>
-                                </Frame>
-                            </SwipeItemView>
-                            <SwipeItemView>
-                                <Frame BackgroundColor="{DynamicResource SecondaryColor}" WidthRequest="50">
-                                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                        <Label Text="&#xf044;" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"
-                                               FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
-                                        <Label Text="Edit"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
-                                    </StackLayout>
-                                </Frame>
-                            </SwipeItemView>
-                        </SwipeItems>
-                    </SwipeView.LeftItems>
-                    <Frame>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenPopupCommand}"/>
-                        </Frame.GestureRecognizers>
-                        <StackLayout>
-                            <ActivityIndicator IsVisible="{Binding AllJobs.IsNotCompleted}" 
-                                               IsRunning="{Binding AllJobs.IsNotCompleted}" 
-                                               HeightRequest="62"/>
-                            <Label Text="{Binding ActiveJob.Name}"
-                                    HorizontalTextAlignment="Center" 
-                                    FontAttributes="Bold"
-                                    FontSize="30"
-                                    IsVisible="{Binding AllJobs.IsSuccessfullyCompleted}"/>
-                            <Label Text="{Binding ActiveJob.Employer}" 
-                               HorizontalTextAlignment="Center" 
-                               FontAttributes="Bold"
-                               FontSize="12"
-                               IsVisible="{Binding IsNotBusy}"/>
-                        </StackLayout>
-                    </Frame>
-                </SwipeView>
+        <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
+            <SwipeView>
+                <SwipeView.LeftItems>
+                    <SwipeItems>
+                        <SwipeItemView Command="{Binding DeleteCommand}">
+                            <Frame BackgroundColor="{DynamicResource DeleteButtonColor}" WidthRequest="50">
+                                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                    <Label Text="&#xf2ed;" HorizontalOptions="Center" VerticalOptions="Center"
+                                            FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
+                                    <Label Text="Delete"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
+                                </StackLayout>
+                            </Frame>
+                        </SwipeItemView>
+                        <SwipeItemView>
+                            <Frame BackgroundColor="{DynamicResource SecondaryColor}" WidthRequest="50">
+                                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                    <Label Text="&#xf044;" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0,0,0"
+                                            FontAttributes="Bold" FontSize="20" FontFamily="{StaticResource FontAwesomeRegular}"/>
+                                    <Label Text="Edit"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="14"/>
+                                </StackLayout>
+                            </Frame>
+                        </SwipeItemView>
+                    </SwipeItems>
+                </SwipeView.LeftItems>
+                <Frame>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenJobsPopupCommand}"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <ActivityIndicator IsVisible="{Binding AllJobs.IsNotCompleted}" 
+                                            IsRunning="{Binding AllJobs.IsNotCompleted}" 
+                                            HeightRequest="62"/>
+                        <Label Text="{Binding ActiveJob.Name}"
+                                HorizontalTextAlignment="Center" 
+                                FontAttributes="Bold"
+                                FontSize="30"
+                                IsVisible="{Binding AllJobs.IsSuccessfullyCompleted}"/>
+                        <Label Text="{Binding ActiveJob.Employer}" 
+                            HorizontalTextAlignment="Center" 
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            IsVisible="{Binding IsNotBusy}"/>
+                    </StackLayout>
+                </Frame>
+            </SwipeView>
 
-                <controls:FancyEntry Placeholder="$0.00" 
-                                     Text="{Binding TotalMoney, Converter={StaticResource NullableDoubleConverter}}"
-                                     Keyboard="Numeric"
-                                     HorizontalOptions="Center"
-                                     WidthRequest="120"/>
-                <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <controls:FancyEntry Placeholder="0 Hours" 
-                                     Text="{Binding TotalHours, Converter={StaticResource NullableDoubleConverter}}"
-                                     Keyboard="Numeric"
-                                     HorizontalOptions="Center"
-                                     WidthRequest="120"/> 
-                <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <DatePicker Date="{Binding DateWorked}" WidthRequest="120" HorizontalOptions="Center"/>
-                <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Button Text="Save" Command="{Binding SaveStat}"/>
-            </StackLayout>
+            <controls:FancyEntry Placeholder="$0.00" 
+                                    Text="{Binding TotalMoney, Converter={StaticResource NullableDoubleConverter}}"
+                                    Keyboard="Numeric"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="120"/>
+            <Label Text="Total Money Earned" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <controls:FancyEntry Placeholder="0 Hours" 
+                                    Text="{Binding TotalHours, Converter={StaticResource NullableDoubleConverter}}"
+                                    Keyboard="Numeric"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="120"/> 
+            <Label Text="Total Hours Worked" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <DatePicker Date="{Binding DateWorked}" WidthRequest="120" HorizontalOptions="Center"/>
+            <Label Text="Date" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Button Text="Save" Command="{Binding SaveStat}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
