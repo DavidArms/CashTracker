@@ -5,7 +5,6 @@ using CashTracker.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Rg.Plugins.Popup.Contracts;
-using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +17,10 @@ namespace CashTracker.ViewModels
     [QueryProperty("JobID", "JobID")]
     public class AddStatViewModel : BaseViewModel
     {
-        private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
-        private IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
-        private IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
-        private IMessage _toaster = DependencyService.Get<IMessage>();
+        private readonly IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
+        private readonly IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
+        private readonly IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
+        private readonly IMessage _toaster = DependencyService.Get<IMessage>();
 
         private double? _totalHours;
         private double? _totalMoney;
