@@ -42,10 +42,19 @@ namespace CashTracker.Database
         public async Task<T> FirstOrDefaultAsync() => await Connection.Table<T>().FirstOrDefaultAsync().ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public async Task AddAsync(T entity) => await Connection.InsertAsync(entity).ConfigureAwait(false);
+        public async Task AddAsync(T entity)
+        {
+            entity.CreationDate = DateTime.Now;
+            entity.ModifiedDate = DateTime.Now;
+            await Connection.InsertAsync(entity).ConfigureAwait(false);
+        }
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(T entity) => await Connection.UpdateAsync(entity).ConfigureAwait(false);
+        public async Task UpdateAsync(T entity)
+        {
+            entity.ModifiedDate = DateTime.Now;
+            await Connection.UpdateAsync(entity).ConfigureAwait(false);
+        }
 
         /// <inheritdoc/>
         public async Task RemoveAsync(T entity) => await Connection.DeleteAsync(entity).ConfigureAwait(false);

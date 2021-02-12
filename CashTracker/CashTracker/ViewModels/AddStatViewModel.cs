@@ -1,10 +1,10 @@
+using CashTracker.Controls;
 using CashTracker.Database;
 using CashTracker.Models;
 using CashTracker.Views;
 using MvvmHelpers;
 using MvvmHelpers.Commands;
 using Rg.Plugins.Popup.Contracts;
-using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +17,19 @@ namespace CashTracker.ViewModels
     [QueryProperty("JobID", "JobID")]
     public class AddStatViewModel : BaseViewModel
     {
-        private IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
-        private IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
-        private IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
+        private readonly IAsyncRepository<IncomeStat> _statRepo = App.Container.Resolve<IAsyncRepository<IncomeStat>>();
+        private readonly IAsyncRepository<Job> _jobRepo = App.Container.Resolve<IAsyncRepository<Job>>();
+        private readonly IPopupNavigation _popupNavigation = App.Container.Resolve<IPopupNavigation>();
+        private readonly IMessage _toaster = DependencyService.Get<IMessage>();
 
         private double? _totalHours;
         private double? _totalMoney;
 
         private NotifyTaskCompletion<List<Job>> _allJobs;
+        /// <summary>
+        /// All of the jobs saved in the database
+        /// </summary>
+        /// <remarks>This is an async property. To access the value, you must use AllJobs.Result</remarks>
         public NotifyTaskCompletion<List<Job>> AllJobs
         {
             get => _allJobs;
@@ -76,7 +81,7 @@ namespace CashTracker.ViewModels
         public double? TotalHours
         {
             get => _totalHours;
-            set => SetProperty(ref _totalHours, value);
+            set => SetProperty(ref _totalHours, value, onChanged:RefreshCanExecutes);
         }
 
         /// <summary>
@@ -85,7 +90,7 @@ namespace CashTracker.ViewModels
         public double? TotalMoney
         {
             get => _totalMoney;
-            set => SetProperty(ref _totalMoney, value);
+            set => SetProperty(ref _totalMoney, value, onChanged: RefreshCanExecutes);
         }
 
         /// <summary>
@@ -103,7 +108,7 @@ namespace CashTracker.ViewModels
             DateWorked = DateTime.Today;
             SaveStat = new AsyncCommand(SaveNewStatAsync, (_) => IsNotBusy && ValidateInputs());
             DeleteCommand = new AsyncCommand(DeleteJobAsync);
-            OpenPopupCommand = new AsyncCommand(ShowPopupAsync);
+            OpenJobsPopupCommand = new AsyncCommand(ShowJobsPopupAsync);
 
             AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
             _popupNavigation.Popping += _popupNavigation_Popping;
@@ -112,6 +117,11 @@ namespace CashTracker.ViewModels
         ~AddStatViewModel()
         {
             _popupNavigation.Popping -= _popupNavigation_Popping;
+        }
+
+        private void RefreshCanExecutes()
+        {
+            (SaveStat as AsyncCommand).RaiseCanExecuteChanged();
         }
 
         private void _popupNavigation_Popping(object sender, Rg.Plugins.Popup.Events.PopupNavigationEventArgs e)
@@ -124,8 +134,11 @@ namespace CashTracker.ViewModels
             ActiveJob = jobsPopup.SelectedJob;
         }
 
-        public ICommand OpenPopupCommand { get; }
-        private async Task ShowPopupAsync()
+        /// <summary>
+        /// Shows a popup allowing the user to select from existing jobs
+        /// </summary>
+        public ICommand OpenJobsPopupCommand { get; }
+        private async Task ShowJobsPopupAsync()
         {
             if (!AllJobs.IsSuccessfullyCompleted)
                 return;
@@ -133,10 +146,24 @@ namespace CashTracker.ViewModels
             await _popupNavigation.PushAsync(new JobsPopup(AllJobs.Result, ActiveJob));
         }
 
+        /// <summary>
+        /// Deletes the active job from the database and handles switching to the next job
+        /// </summary>
         public ICommand DeleteCommand { get; }
         private async Task DeleteJobAsync()
         {
-            await _jobRepo.RemoveAsync(ActiveJob);
+            try
+            {
+                await _jobRepo.RemoveAsync(ActiveJob);
+            }
+            catch (Exception ex)
+            {
+                _toaster.LongAlert($"Unable To Delete Job: {ex.Message}");
+                throw;
+            }
+
+            _toaster.LongAlert($"{ActiveJob.Name} Job Deleted");
+
             var nextJobToSelect = await _jobRepo.FirstOrDefaultAsync();
             if (nextJobToSelect != null)
                 ActiveJob = nextJobToSelect;
@@ -145,32 +172,40 @@ namespace CashTracker.ViewModels
             AllJobs = new NotifyTaskCompletion<List<Job>>(LoadAllJobsAsync());
         }
 
-        public ICommand SaveStat { get; }
         /// <summary>
         /// Saves a new statistic based on the inputs currently on screen
         /// </summary>
+        public ICommand SaveStat { get; }
         private async Task SaveNewStatAsync()
         {
+            // Keeping the responsibility of validating inputs OUT of this method. This should
+            // only be called if the current user inputs are valid.
+
             var newStat = new IncomeStat
             {
                 Job_ID = ActiveJob.ID,
-                MoneyMade = TotalMoney.Value,
-                HoursWorked = TotalHours.Value,
+                MoneyMade = TotalMoney.GetValueOrDefault(),
+                HoursWorked = TotalHours.GetValueOrDefault(),
                 DateStart = DateWorked
             };
 
-            //try
-            //{
-            //    _repo.SaveNewIncomeStatForJob(newStat);
-            //    return true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    // TODO Log and inform user of error
-            //    return false;
-            //}
+            try
+            {
+                await _statRepo.AddAsync(newStat);
+                _toaster.LongAlert("Successfully Saved Stats");
+                TotalMoney = null;
+                TotalHours = null;
+            }
+            catch (Exception ex)
+            {
+                // TODO Log and inform user of error
+            }
         }
 
+        /// <summary>
+        /// Loads all jobs from the database
+        /// </summary>
+        /// <remarks>Will send user to the AddJobPage if no jobs are found</remarks>
         public async Task<List<Job>> LoadAllJobsAsync()
         {
             var jobs = await _jobRepo.GetAllAsync();
